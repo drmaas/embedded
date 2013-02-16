@@ -1,0 +1,8 @@
+task1: {deadline: 15, offset: 0, period: 20, wcet: 4}
+task2: {deadline: 20, offset: 5, period: 20, wcet: 1}
+task3: {deadline: 30, offset: 5, period: 30, wcet: 2}
+task4: {deadline: 30, offset: 5, period: 30, wcet: 1}
+task5: {deadline: 40, offset: 10, period: 50, wcet: 1}
+task6: {deadline: 40, offset: 10, period: 50, wcet: 1}
+task7: {deadline: 50, offset: 25, period: 50, wcet: 2}
+task8: {deadline: 50, offset: 25, period: 50, wcet: 5}

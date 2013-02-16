@@ -1,0 +1,122 @@
+task1:
+  deadline: 15
+  offset: 0
+  period: 20
+  times:
+  - {duration: 4, start: 0}
+  - {duration: 3, start: 20}
+  - {duration: 3, start: 40}
+  - {duration: 1, start: 60}
+  - {duration: 4, start: 80}
+  - {duration: 4, start: 100}
+  - {duration: 2, start: 120}
+  - {duration: 4, start: 140}
+  - {duration: 2, start: 160}
+  - {duration: 4, start: 180}
+  - {duration: 3, start: 200}
+  - {duration: 2, start: 220}
+  - {duration: 3, start: 240}
+  - {duration: 2, start: 260}
+  - {duration: 1, start: 284}
+  wcet: 4
+task2:
+  deadline: 20
+  offset: 5
+  period: 20
+  times:
+  - {duration: 1, start: 5}
+  - {duration: 1, start: 25}
+  - {duration: 1, start: 45}
+  - {duration: 1, start: 65}
+  - {duration: 1, start: 85}
+  - {duration: 1, start: 105}
+  - {duration: 1, start: 125}
+  - {duration: 1, start: 145}
+  - {duration: 1, start: 165}
+  - {duration: 1, start: 185}
+  - {duration: 1, start: 205}
+  - {duration: 1, start: 225}
+  - {duration: 1, start: 245}
+  - {duration: 1, start: 265}
+  - {duration: 1, start: 285}
+  wcet: 1
+task3:
+  deadline: 30
+  offset: 5
+  period: 30
+  times:
+  - {duration: 1, start: 6}
+  - {duration: 1, start: 35}
+  - {duration: 1, start: 66}
+  - {duration: 1, start: 95}
+  - {duration: 2, start: 126}
+  - {duration: 2, start: 155}
+  - {duration: 1, start: 186}
+  - {duration: 2, start: 215}
+  - {duration: 2, start: 246}
+  - {duration: 2, start: 275}
+  wcet: 2
+task4:
+  deadline: 30
+  offset: 5
+  period: 30
+  times:
+  - {duration: 1, start: 7}
+  - {duration: 1, start: 36}
+  - {duration: 1, start: 67}
+  - {duration: 1, start: 96}
+  - {duration: 1, start: 128}
+  - {duration: 1, start: 157}
+  - {duration: 1, start: 187}
+  - {duration: 1, start: 217}
+  - {duration: 1, start: 248}
+  - {duration: 1, start: 277}
+  wcet: 1
+task5:
+  deadline: 40
+  offset: 10
+  period: 50
+  times:
+  - {duration: 1, start: 10}
+  - {duration: 1, start: 68}
+  - {duration: 1, start: 110}
+  - {duration: 1, start: 166}
+  - {duration: 1, start: 218}
+  - {duration: 1, start: 266}
+  wcet: 1
+task6:
+  deadline: 40
+  offset: 10
+  period: 50
+  times:
+  - {duration: 1, start: 11}
+  - {duration: 1, start: 69}
+  - {duration: 1, start: 111}
+  - {duration: 1, start: 167}
+  - {duration: 1, start: 219}
+  - {duration: 1, start: 267}
+  wcet: 1
+task7:
+  deadline: 50
+  offset: 25
+  period: 50
+  times:
+  - {duration: 2, start: 26}
+  - {duration: 2, start: 75}
+  - {duration: 1, start: 129}
+  - {duration: 1, start: 175}
+  - {duration: 1, start: 226}
+  - {duration: 1, start: 278}
+  wcet: 2
+task8:
+  deadline: 50
+  offset: 25
+  period: 50
+  times:
+  - {duration: 3, start: 28}
+  - {duration: 1, start: 77}
+  - {duration: 3, start: 130}
+  - {duration: 3, start: 176}
+  - {duration: 2, start: 227}
+  - {duration: 5, start: 279}
+  wcet: 5

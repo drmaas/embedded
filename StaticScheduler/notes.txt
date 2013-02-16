@@ -1,0 +1,1 @@
+Set PYTHONPATH="/home/drmaas/PythonProjects/5831Projects/StaticScheduler" so that all modules can be found
