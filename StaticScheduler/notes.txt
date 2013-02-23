@@ -1,1 +1,1 @@
-Set PYTHONPATH="/home/drmaas/PythonProjects/5831Projects/StaticScheduler" so that all modules can be found
+Export PYTHONPATH="<full path to StaticScheduler>" so that all modules can be found at runtime
