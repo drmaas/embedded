@@ -9,7 +9,8 @@ class Plot(object):
         self.H = H
         self.I = I
         self.name = name
-        self.fig = pyplot.figure(num=self.name,figsize=(10,5), dpi=160)
+        self.fig = pyplot.figure(num='Static Scheduling Tool',figsize=(10,5), dpi=160)
+        self.fig.suptitle(self.name, fontsize=12)
        
     # add legend
     def addLegend(self):
@@ -46,12 +47,12 @@ class Plot(object):
             self.addColors(colors, 0, run, wcet_idle, true_idle)               
             
         # set up color bar
-        self.createBar(colors, 'Schedule', 0.90)
+        self.createBar(colors, 'Schedule', 0.88)
         
     # add all task bars
     def addTaskBars(self):
         i = 0
-        start_v_offset = 0.80
+        start_v_offset = 0.78
         for id, task in self.executions.iteritems():
             v_offset = start_v_offset - (i*0.09)
             self.addTaskBar(id, task, v_offset)
@@ -112,6 +113,12 @@ class Plot(object):
                                             drawedges='true')
         ax.set_ylabel(label, fontsize='xx-small')                
         ax.set_xticklabels(ticks,fontsize='xx-small')
+        
+    # add misc info
+    def addMiscInfo(self):
+        self.fig.text(0.5, 0.05, 'Time', fontsize=12)
+        self.fig.text(.65, 0.05, 'Hyperperiod='+str(self.H), fontsize=12)
+        self.fig.text(.65, 0.015, 'Period Interrupt='+str(self.I), fontsize=12)
         
     # show the plot
     def show(self):

@@ -11,8 +11,8 @@ class Test(unittest.TestCase):
 
     # Data setup
     def setUp(self):
-        self.schedulefile = "../output/schedule1.yaml"
-        self.execfile = "../output/executions1.yaml"
+        self.schedulefile = "../output/schedule2.yaml"
+        self.execfile = "../output/executions2.yaml"
         self.schedule = Utils.loadYaml(self.schedulefile)
         self.executions = Utils.loadYaml(self.execfile)
 
@@ -22,10 +22,12 @@ class Test(unittest.TestCase):
     # Ensure loading workload from xml works
     def testPlotSchedule(self):
         print "testPlotSchedule():"
-        p = Plot(self.schedule, self.executions, 80, 5, "Workoad 1")
+        #p = Plot(self.schedule, self.executions, 80, 5, "Workoad 1")
+        p = Plot(self.schedule, self.executions, 300, 10, "Workoad 2")
         p.addScheduleBar()
         p.addTaskBars()
         p.addLegend()
+        p.addMiscInfo()
         p.show()
 
 
