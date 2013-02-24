@@ -9,13 +9,15 @@ class Processor(object):
     self.taskendtime = 0
     self.monitors = []
     self.taskid = ''
+    self.exectime = 0
 
   # execute just sets the task end point, doesn't actually do anything real
   # currently all tasks take a random time between 1 and worst-case execution time units
   def execute(self, task, etFunc):
     self.taskid = task['id']
     self.taskstarttime = self.currtime
-    self.taskendtime = self.currtime + etFunc(task['wcet'])
+    self.exectime = etFunc(task['wcet']);
+    self.taskendtime = self.currtime + self.exectime
 
   # check if the processor is currently executing
   def busy(self):
@@ -38,3 +40,8 @@ class Processor(object):
   # return results so we can do stuff with them
   def getMonitors(self):
     return self.monitors
+    
+  # return the execution time of the current task
+  # in our case task does not need to be complete since exec time is simulated
+  def getCurrExecTime(self):
+    return self.exectime  

@@ -66,6 +66,7 @@ class Scheduler(object):
               # add task to schedule
               del task['minstart']
               task['start'] = i
+              task['et'] = self.processor.getCurrExecTime()
               self.schedule.append(task)
             else:
               self.log.debug("Time:" + str(i) + " Offset not expired, idling")

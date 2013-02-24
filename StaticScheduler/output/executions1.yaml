@@ -3,7 +3,7 @@ task1:
   offset: 0
   period: 10
   times:
-  - {duration: 1, start: 0}
+  - {duration: 2, start: 0}
   - {duration: 2, start: 11}
   - {duration: 2, start: 20}
   - {duration: 2, start: 30}
@@ -17,14 +17,14 @@ task2:
   offset: 0
   period: 10
   times:
-  - {duration: 2, start: 1}
+  - {duration: 1, start: 2}
   - {duration: 2, start: 13}
   - {duration: 2, start: 22}
   - {duration: 1, start: 32}
-  - {duration: 2, start: 42}
-  - {duration: 1, start: 51}
+  - {duration: 1, start: 42}
+  - {duration: 2, start: 51}
   - {duration: 2, start: 61}
-  - {duration: 1, start: 71}
+  - {duration: 2, start: 71}
   wcet: 2
 task3:
   deadline: 20
@@ -41,18 +41,18 @@ task4:
   offset: 5
   period: 20
   times:
-  - {duration: 2, start: 6}
-  - {duration: 2, start: 26}
+  - {duration: 1, start: 6}
+  - {duration: 1, start: 26}
   - {duration: 1, start: 46}
-  - {duration: 2, start: 66}
+  - {duration: 1, start: 66}
   wcet: 2
 task5:
   deadline: 30
   offset: 5
   period: 40
   times:
-  - {duration: 1, start: 8}
-  - {duration: 1, start: 47}
+  - {duration: 2, start: 7}
+  - {duration: 2, start: 47}
   wcet: 2
 task6:
   deadline: 30
@@ -60,7 +60,7 @@ task6:
   period: 40
   times:
   - {duration: 2, start: 9}
-  - {duration: 1, start: 48}
+  - {duration: 1, start: 49}
   wcet: 2
 task7:
   deadline: 60
