@@ -87,3 +87,7 @@ class Scheduler(object):
   # get hyperperiod
   def getH(self):
     return self.H
+
+  # get period interrupt
+  def getI(self):
+    return self.interrupt

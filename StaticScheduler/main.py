@@ -6,6 +6,7 @@ from scheduler.scheduler import Scheduler
 from scheduler.processor import Processor
 from scheduler.jobqueue import JobQueue
 from scheduler.processormonitor import ProcessorMonitor
+from ui.plot import Plot
 from verifier.verifier import Verifier
 import util.utils as Utils
 
@@ -38,6 +39,14 @@ def runTasks():
     Utils.dumpSchedule(sc.getSchedule(), schedulesummary)
     Utils.dumpYaml(sc.getSchedule(), schedule)
     Utils.dumpYaml(pm.getResults(), executions)
+
+    # plot the schedule
+    p = Plot(sc.getSchedule(), pm.getResults(), sc.getH(), sc.getI(), id)
+    p.addScheduleBar()
+    p.addTaskBars()
+    p.addLegend()
+    p.addMiscInfo()
+    p.show()
 
     # verify the schedule
     v = Verifier(Utils.loadYaml(executions), sc.getH())
