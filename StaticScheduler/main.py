@@ -10,6 +10,8 @@ from ui.plot import Plot
 from verifier.verifier import Verifier
 import util.utils as Utils
 
+from matplotlib import pyplot
+
 # Run all tasks from workload 1 and workload 2
 def runTasks():
 
@@ -47,11 +49,11 @@ def runTasks():
     p.addLegend()
     p.addMiscInfo()
     p.show()
-
+    
     # verify the schedule
     v = Verifier(Utils.loadYaml(executions), sc.getH())
-    v.verifySchedule()
-
+    v.verifySchedule() 
+  
 # Main starts here
 if __name__ == '__main__':
   logging.config.fileConfig("conf/info.conf")

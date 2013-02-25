@@ -1,1 +1,3 @@
 Export PYTHONPATH="<full path to StaticScheduler>" so that all modules can be found at runtime
+
+Added backend_gtk3* libraries from git master
