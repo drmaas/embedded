@@ -54,8 +54,8 @@ def runTasks():
     v = Verifier(Utils.loadYaml(executions), sc.getH(), input)
     v.verifySchedule()
     
-    # show the plot
-    p.show() 
+  # show the plot
+  p.show() 
   
 # Main starts here
 if __name__ == '__main__':
