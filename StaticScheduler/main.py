@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import unittest
 import logging
 import logging.config
@@ -46,15 +48,14 @@ def runTasks():
 
     # plot the schedule
     p = Plot(sc.getSchedule(), pm.getResults(), sc.getH(), sc.getI(), id)
-    p.addScheduleBar()
-    p.addTaskBars()
-    p.addLegend()
-    p.addMiscInfo()
-    p.show()
+    p.create()
     
     # verify the schedule
-    v = Verifier(Utils.loadYaml(executions), sc.getH())
-    v.verifySchedule() 
+    v = Verifier(Utils.loadYaml(executions), sc.getH(), input)
+    v.verifySchedule()
+    
+    # show the plot
+    p.show() 
   
 # Main starts here
 if __name__ == '__main__':

@@ -9,8 +9,15 @@ class Plot(object):
         self.H = H
         self.I = I
         self.name = name
-        self.fig = pyplot.figure(num='Static Scheduling Tool',figsize=(10,5), dpi=160)
+        self.fig = pyplot.figure(num=name,figsize=(10,5), dpi=160)
         self.fig.suptitle(self.name, fontsize=12)
+       
+    # configure plot
+    def create(self):
+        self.addScheduleBar()
+        self.addTaskBars()
+        self.addLegend()
+        self.addMiscInfo()
        
     # add legend
     def addLegend(self):

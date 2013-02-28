@@ -2,18 +2,20 @@ import logging
 
 class Verifier(object):
 
-  def __init__(self, ex, H):
-    self.ex = ex
-    self.H = H
-
-  def verifySchedule(self):
-  
+  def __init__(self, ex, H, name):
+    
     self.log = logging.getLogger("Verifier")
     
+    self.ex = ex
+    self.H = H
+    self.name = name
+
+  def verifySchedule(self):
+    
     # verify tasks meeting requirements
-    self.log.info("")
-    self.log.info("Verifying timing requirements for all tasks")
-    self.log.info("")
+    self.log.info("###################################################")
+    self.log.info("Verifying timing requirements for " + self.name + " tasks")
+    self.log.info("###################################################")
     for id,task in self.ex.iteritems():
       self.verifyTask(id,task)
 
