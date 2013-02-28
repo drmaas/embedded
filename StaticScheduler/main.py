@@ -15,6 +15,8 @@ from matplotlib import pyplot
 # Run all tasks from workload 1 and workload 2
 def runTasks():
 
+  log = logging.getLogger("main")
+  
   # setup
   workloads = { 'workload1': { 'input':'input/workload1.yaml', 'schedulesummary':'output/schedule1.txt', 
                 'schedule':'output/schedule1.yaml', 'executions':'output/executions1.yaml' },
@@ -27,11 +29,11 @@ def runTasks():
     schedulesummary = workload['schedulesummary']
     schedule = workload['schedule']
     executions = workload['executions']
-    print
-    print "##############################################"
-    print "# Running " + input
-    print "##############################################"
-    print
+    log.info("")
+    log.info("##############################################")
+    log.info("# Running " + input)
+    log.info("##############################################")
+    log.info("")
     proc = Processor()
     w = Utils.loadYaml(input)
     pm = ProcessorMonitor(w)

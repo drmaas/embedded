@@ -1,3 +1,5 @@
+import logging
+
 class Verifier(object):
 
   def __init__(self, ex, H):
@@ -5,24 +7,27 @@ class Verifier(object):
     self.H = H
 
   def verifySchedule(self):
+  
+    self.log = logging.getLogger("Verifier")
+    
     # verify tasks meeting requirements
-    print
-    print "Verifying timing requirements for all tasks"
-    print
+    self.log.info("")
+    self.log.info("Verifying timing requirements for all tasks")
+    self.log.info("")
     for id,task in self.ex.iteritems():
       self.verifyTask(id,task)
 
     # verify tasks don't overlap
-    print
-    print "Verifying that only one task runs at a time for the entire hyperperiod"
-    print
+    self.log.info("")
+    self.log.info("Verifying that only one task runs at a time for the entire hyperperiod")
+    self.log.info("")
     self.verifySingleThread(self.ex)
      
   # verify task runs each period between offset and ends by deadline
   def verifyTask(self, id, task):
-    print
-    print "Verifying timing requirements for task " + id
-    print
+    self.log.info("")
+    self.log.info("Verifying timing requirements for task " + id)
+    self.log.info("")
     period = task['period']
     offset = task['offset']
     deadline = task['deadline']
@@ -43,16 +48,16 @@ class Verifier(object):
           run = True
           # did it meet timing?
           if start >= minstart and end <= maxend:
-            print "Success for task " + id + " at period interrupt " + str(i)
+            self.log.info("Success for task " + id + " at period interrupt " + str(i))
             verified = True
             break
           else:
-            print "Timing failure for task " + id + " during period interrupt " + str(i) + ". Oops."
-            print "Minimum start:" + str(minstart) + " Actual start:"+str(start)
-            print "Maximum end:" + str(maxend) + " Actual end:"+str(end)
+            self.log.info("Timing failure for task " + id + " during period interrupt " + str(i) + ". Oops.")
+            self.log.info("Minimum start:" + str(minstart) + " Actual start:"+str(start))
+            self.log.info("Maximum end:" + str(maxend) + " Actual end:"+str(end))
 
       if not run:
-        print "Task " + id + " did no run during period interrupt " + str(i) + ". Oops." 
+        self.log.info("Task " + id + " did no run during period interrupt " + str(i) + ". Oops.")
 
   # verify no two tasks ever overlap
   def verifySingleThread(self, tasks):
@@ -69,12 +74,12 @@ class Verifier(object):
             runningtasks[id] = task
       if len(runningtasks) > 1:
         success = False
-	print
-        print "Failure: multiple tasks are running at time " + str(i)
+        self.log.info("")
+        self.log.info("Failure: multiple tasks are running at time " + str(i))
         for id,task in runningtasks.iteritems():
-          print "Running:"+id
+          self.log.info("Running:"+id)
     if success:
-      print "Verified that only one task runs at a time."
+      self.log.info("Verified that only one task runs at a time.")
     else:
-      print "Check for one process running at a time failed."
+      self.log.info("Check for one process running at a time failed.")
       
