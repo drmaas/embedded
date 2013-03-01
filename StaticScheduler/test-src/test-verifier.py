@@ -1,8 +1,10 @@
+#!/usr/bin/python
+
 import unittest
 import logging
 import logging.config
 
-from verifier import Verifier
+from verifier.verifier import Verifier
 import util.utils as Utils
 
 # Unit tests for the program modules
@@ -19,7 +21,7 @@ class Test(unittest.TestCase):
   # Test verifier
   def testVerifier(self):
     print "testVerifier():"
-    v = Verifier(Utils.loadYaml(self.e1))
+    v = Verifier(Utils.loadYaml(self.e1),80,'workload1')
     v.verifySchedule() 
     print 
 

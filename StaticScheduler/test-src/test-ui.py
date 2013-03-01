@@ -1,8 +1,10 @@
+#!/usr/bin/python
+
 import unittest
 import logging
 import logging.config
 
-from plot import Plot
+from ui.plot import Plot
 
 import util.utils as Utils
 

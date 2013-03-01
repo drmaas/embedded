@@ -1,166 +1,166 @@
-2013-02-27 20:36:42,934 - Verifier - INFO - 
-2013-02-27 20:36:42,934 - Verifier - INFO - Verifying timing requirements for all tasks
-2013-02-27 20:36:42,934 - Verifier - INFO - 
-2013-02-27 20:36:42,934 - Verifier - INFO - 
-2013-02-27 20:36:42,934 - Verifier - INFO - Verifying timing requirements for task task1
-2013-02-27 20:36:42,935 - Verifier - INFO - 
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 0
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 10
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 20
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 30
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 40
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 50
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 60
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task1 at period interrupt 70
-2013-02-27 20:36:42,935 - Verifier - INFO - 
-2013-02-27 20:36:42,935 - Verifier - INFO - Verifying timing requirements for task task2
-2013-02-27 20:36:42,935 - Verifier - INFO - 
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 0
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 10
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 20
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 30
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 40
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 50
-2013-02-27 20:36:42,935 - Verifier - INFO - Success for task task2 at period interrupt 60
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task2 at period interrupt 70
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Verifying timing requirements for task task3
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task3 at period interrupt 0
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task3 at period interrupt 20
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task3 at period interrupt 40
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task3 at period interrupt 60
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Verifying timing requirements for task task4
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task4 at period interrupt 0
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task4 at period interrupt 20
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task4 at period interrupt 40
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task4 at period interrupt 60
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Verifying timing requirements for task task5
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task5 at period interrupt 0
-2013-02-27 20:36:42,936 - Verifier - INFO - Success for task task5 at period interrupt 40
-2013-02-27 20:36:42,936 - Verifier - INFO - 
-2013-02-27 20:36:42,936 - Verifier - INFO - Verifying timing requirements for task task6
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,937 - Verifier - INFO - Success for task task6 at period interrupt 0
-2013-02-27 20:36:42,937 - Verifier - INFO - Success for task task6 at period interrupt 40
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,937 - Verifier - INFO - Verifying timing requirements for task task7
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,937 - Verifier - INFO - Success for task task7 at period interrupt 0
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,937 - Verifier - INFO - Verifying timing requirements for task task8
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,937 - Verifier - INFO - Success for task task8 at period interrupt 0
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,937 - Verifier - INFO - Verifying that only one task runs at a time for the entire hyperperiod
-2013-02-27 20:36:42,937 - Verifier - INFO - 
-2013-02-27 20:36:42,938 - Verifier - INFO - Verified that only one task runs at a time.
-2013-02-27 20:36:44,699 - Verifier - INFO - 
-2013-02-27 20:36:44,699 - Verifier - INFO - Verifying timing requirements for all tasks
-2013-02-27 20:36:44,699 - Verifier - INFO - 
-2013-02-27 20:36:44,699 - Verifier - INFO - 
-2013-02-27 20:36:44,699 - Verifier - INFO - Verifying timing requirements for task task1
-2013-02-27 20:36:44,699 - Verifier - INFO - 
-2013-02-27 20:36:44,699 - Verifier - INFO - Success for task task1 at period interrupt 0
-2013-02-27 20:36:44,699 - Verifier - INFO - Success for task task1 at period interrupt 20
-2013-02-27 20:36:44,699 - Verifier - INFO - Success for task task1 at period interrupt 40
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 60
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 80
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 100
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 120
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 140
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 160
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 180
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 200
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 220
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 240
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 260
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task1 at period interrupt 280
-2013-02-27 20:36:44,700 - Verifier - INFO - 
-2013-02-27 20:36:44,700 - Verifier - INFO - Verifying timing requirements for task task2
-2013-02-27 20:36:44,700 - Verifier - INFO - 
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 0
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 20
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 40
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 60
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 80
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 100
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 120
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 140
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 160
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 180
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 200
-2013-02-27 20:36:44,700 - Verifier - INFO - Success for task task2 at period interrupt 220
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task2 at period interrupt 240
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task2 at period interrupt 260
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task2 at period interrupt 280
-2013-02-27 20:36:44,701 - Verifier - INFO - 
-2013-02-27 20:36:44,701 - Verifier - INFO - Verifying timing requirements for task task3
-2013-02-27 20:36:44,701 - Verifier - INFO - 
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 0
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 30
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 60
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 90
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 120
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 150
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 180
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 210
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 240
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task3 at period interrupt 270
-2013-02-27 20:36:44,701 - Verifier - INFO - 
-2013-02-27 20:36:44,701 - Verifier - INFO - Verifying timing requirements for task task4
-2013-02-27 20:36:44,701 - Verifier - INFO - 
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 0
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 30
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 60
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 90
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 120
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 150
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 180
-2013-02-27 20:36:44,701 - Verifier - INFO - Success for task task4 at period interrupt 210
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task4 at period interrupt 240
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task4 at period interrupt 270
-2013-02-27 20:36:44,702 - Verifier - INFO - 
-2013-02-27 20:36:44,702 - Verifier - INFO - Verifying timing requirements for task task5
-2013-02-27 20:36:44,702 - Verifier - INFO - 
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task5 at period interrupt 0
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task5 at period interrupt 50
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task5 at period interrupt 100
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task5 at period interrupt 150
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task5 at period interrupt 200
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task5 at period interrupt 250
-2013-02-27 20:36:44,702 - Verifier - INFO - 
-2013-02-27 20:36:44,702 - Verifier - INFO - Verifying timing requirements for task task6
-2013-02-27 20:36:44,702 - Verifier - INFO - 
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task6 at period interrupt 0
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task6 at period interrupt 50
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task6 at period interrupt 100
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task6 at period interrupt 150
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task6 at period interrupt 200
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task6 at period interrupt 250
-2013-02-27 20:36:44,702 - Verifier - INFO - 
-2013-02-27 20:36:44,702 - Verifier - INFO - Verifying timing requirements for task task7
-2013-02-27 20:36:44,702 - Verifier - INFO - 
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task7 at period interrupt 0
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task7 at period interrupt 50
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task7 at period interrupt 100
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task7 at period interrupt 150
-2013-02-27 20:36:44,702 - Verifier - INFO - Success for task task7 at period interrupt 200
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task7 at period interrupt 250
-2013-02-27 20:36:44,703 - Verifier - INFO - 
-2013-02-27 20:36:44,703 - Verifier - INFO - Verifying timing requirements for task task8
-2013-02-27 20:36:44,703 - Verifier - INFO - 
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task8 at period interrupt 0
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task8 at period interrupt 50
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task8 at period interrupt 100
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task8 at period interrupt 150
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task8 at period interrupt 200
-2013-02-27 20:36:44,703 - Verifier - INFO - Success for task task8 at period interrupt 250
-2013-02-27 20:36:44,703 - Verifier - INFO - 
-2013-02-27 20:36:44,703 - Verifier - INFO - Verifying that only one task runs at a time for the entire hyperperiod
-2013-02-27 20:36:44,703 - Verifier - INFO - 
-2013-02-27 20:36:44,707 - Verifier - INFO - Verified that only one task runs at a time.
+2013-02-28 21:12:58,940 - Verifier - INFO - ###################################################
+2013-02-28 21:12:58,940 - Verifier - INFO - Verifying timing requirements for ../input/workload1.yaml tasks
+2013-02-28 21:12:58,940 - Verifier - INFO - ###################################################
+2013-02-28 21:12:58,940 - Verifier - INFO - 
+2013-02-28 21:12:58,940 - Verifier - INFO - Verifying timing requirements for task task1
+2013-02-28 21:12:58,940 - Verifier - INFO - 
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 0
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 10
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 20
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 30
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 40
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 50
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 60
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task1 at period interrupt 70
+2013-02-28 21:12:58,940 - Verifier - INFO - 
+2013-02-28 21:12:58,940 - Verifier - INFO - Verifying timing requirements for task task2
+2013-02-28 21:12:58,940 - Verifier - INFO - 
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task2 at period interrupt 0
+2013-02-28 21:12:58,940 - Verifier - INFO - Success for task task2 at period interrupt 10
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task2 at period interrupt 20
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task2 at period interrupt 30
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task2 at period interrupt 40
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task2 at period interrupt 50
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task2 at period interrupt 60
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task2 at period interrupt 70
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Verifying timing requirements for task task3
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task3 at period interrupt 0
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task3 at period interrupt 20
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task3 at period interrupt 40
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task3 at period interrupt 60
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Verifying timing requirements for task task4
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task4 at period interrupt 0
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task4 at period interrupt 20
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task4 at period interrupt 40
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task4 at period interrupt 60
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Verifying timing requirements for task task5
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task5 at period interrupt 0
+2013-02-28 21:12:58,941 - Verifier - INFO - Success for task task5 at period interrupt 40
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,941 - Verifier - INFO - Verifying timing requirements for task task6
+2013-02-28 21:12:58,941 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Success for task task6 at period interrupt 0
+2013-02-28 21:12:58,942 - Verifier - INFO - Success for task task6 at period interrupt 40
+2013-02-28 21:12:58,942 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Verifying timing requirements for task task7
+2013-02-28 21:12:58,942 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Success for task task7 at period interrupt 0
+2013-02-28 21:12:58,942 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Verifying timing requirements for task task8
+2013-02-28 21:12:58,942 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Success for task task8 at period interrupt 0
+2013-02-28 21:12:58,942 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Verifying that only one task runs at a time for the entire hyperperiod
+2013-02-28 21:12:58,942 - Verifier - INFO - 
+2013-02-28 21:12:58,942 - Verifier - INFO - Verified that only one task runs at a time.
+2013-02-28 21:13:01,084 - Verifier - INFO - ###################################################
+2013-02-28 21:13:01,084 - Verifier - INFO - Verifying timing requirements for ../input/workload2.yaml tasks
+2013-02-28 21:13:01,084 - Verifier - INFO - ###################################################
+2013-02-28 21:13:01,084 - Verifier - INFO - 
+2013-02-28 21:13:01,084 - Verifier - INFO - Verifying timing requirements for task task1
+2013-02-28 21:13:01,084 - Verifier - INFO - 
+2013-02-28 21:13:01,084 - Verifier - INFO - Success for task task1 at period interrupt 0
+2013-02-28 21:13:01,084 - Verifier - INFO - Success for task task1 at period interrupt 20
+2013-02-28 21:13:01,084 - Verifier - INFO - Success for task task1 at period interrupt 40
+2013-02-28 21:13:01,084 - Verifier - INFO - Success for task task1 at period interrupt 60
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 80
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 100
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 120
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 140
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 160
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 180
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 200
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 220
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 240
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 260
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task1 at period interrupt 280
+2013-02-28 21:13:01,085 - Verifier - INFO - 
+2013-02-28 21:13:01,085 - Verifier - INFO - Verifying timing requirements for task task2
+2013-02-28 21:13:01,085 - Verifier - INFO - 
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 0
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 20
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 40
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 60
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 80
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 100
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 120
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 140
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 160
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 180
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 200
+2013-02-28 21:13:01,085 - Verifier - INFO - Success for task task2 at period interrupt 220
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task2 at period interrupt 240
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task2 at period interrupt 260
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task2 at period interrupt 280
+2013-02-28 21:13:01,086 - Verifier - INFO - 
+2013-02-28 21:13:01,086 - Verifier - INFO - Verifying timing requirements for task task3
+2013-02-28 21:13:01,086 - Verifier - INFO - 
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 0
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 30
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 60
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 90
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 120
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 150
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 180
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 210
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 240
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task3 at period interrupt 270
+2013-02-28 21:13:01,086 - Verifier - INFO - 
+2013-02-28 21:13:01,086 - Verifier - INFO - Verifying timing requirements for task task4
+2013-02-28 21:13:01,086 - Verifier - INFO - 
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 0
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 30
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 60
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 90
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 120
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 150
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 180
+2013-02-28 21:13:01,086 - Verifier - INFO - Success for task task4 at period interrupt 210
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task4 at period interrupt 240
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task4 at period interrupt 270
+2013-02-28 21:13:01,087 - Verifier - INFO - 
+2013-02-28 21:13:01,087 - Verifier - INFO - Verifying timing requirements for task task5
+2013-02-28 21:13:01,087 - Verifier - INFO - 
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task5 at period interrupt 0
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task5 at period interrupt 50
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task5 at period interrupt 100
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task5 at period interrupt 150
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task5 at period interrupt 200
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task5 at period interrupt 250
+2013-02-28 21:13:01,087 - Verifier - INFO - 
+2013-02-28 21:13:01,087 - Verifier - INFO - Verifying timing requirements for task task6
+2013-02-28 21:13:01,087 - Verifier - INFO - 
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task6 at period interrupt 0
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task6 at period interrupt 50
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task6 at period interrupt 100
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task6 at period interrupt 150
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task6 at period interrupt 200
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task6 at period interrupt 250
+2013-02-28 21:13:01,087 - Verifier - INFO - 
+2013-02-28 21:13:01,087 - Verifier - INFO - Verifying timing requirements for task task7
+2013-02-28 21:13:01,087 - Verifier - INFO - 
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task7 at period interrupt 0
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task7 at period interrupt 50
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task7 at period interrupt 100
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task7 at period interrupt 150
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task7 at period interrupt 200
+2013-02-28 21:13:01,087 - Verifier - INFO - Success for task task7 at period interrupt 250
+2013-02-28 21:13:01,088 - Verifier - INFO - 
+2013-02-28 21:13:01,088 - Verifier - INFO - Verifying timing requirements for task task8
+2013-02-28 21:13:01,088 - Verifier - INFO - 
+2013-02-28 21:13:01,088 - Verifier - INFO - Success for task task8 at period interrupt 0
+2013-02-28 21:13:01,088 - Verifier - INFO - Success for task task8 at period interrupt 50
+2013-02-28 21:13:01,088 - Verifier - INFO - Success for task task8 at period interrupt 100
+2013-02-28 21:13:01,088 - Verifier - INFO - Success for task task8 at period interrupt 150
+2013-02-28 21:13:01,088 - Verifier - INFO - Success for task task8 at period interrupt 200
+2013-02-28 21:13:01,088 - Verifier - INFO - Success for task task8 at period interrupt 250
+2013-02-28 21:13:01,088 - Verifier - INFO - 
+2013-02-28 21:13:01,088 - Verifier - INFO - Verifying that only one task runs at a time for the entire hyperperiod
+2013-02-28 21:13:01,088 - Verifier - INFO - 
+2013-02-28 21:13:01,092 - Verifier - INFO - Verified that only one task runs at a time.

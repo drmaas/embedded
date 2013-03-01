@@ -4,20 +4,20 @@ task1:
   period: 20
   times:
   - {duration: 3, start: 0}
-  - {duration: 3, start: 20}
-  - {duration: 2, start: 40}
-  - {duration: 1, start: 60}
-  - {duration: 2, start: 80}
-  - {duration: 2, start: 100}
-  - {duration: 2, start: 120}
-  - {duration: 1, start: 140}
-  - {duration: 2, start: 160}
+  - {duration: 4, start: 20}
+  - {duration: 3, start: 40}
+  - {duration: 2, start: 60}
+  - {duration: 4, start: 82}
+  - {duration: 1, start: 100}
+  - {duration: 3, start: 120}
+  - {duration: 4, start: 140}
+  - {duration: 1, start: 160}
   - {duration: 3, start: 180}
-  - {duration: 3, start: 200}
+  - {duration: 2, start: 200}
   - {duration: 2, start: 220}
   - {duration: 3, start: 240}
-  - {duration: 2, start: 260}
-  - {duration: 4, start: 280}
+  - {duration: 4, start: 260}
+  - {duration: 4, start: 284}
   wcet: 4
 task2:
   deadline: 20
@@ -28,7 +28,7 @@ task2:
   - {duration: 1, start: 25}
   - {duration: 1, start: 45}
   - {duration: 1, start: 65}
-  - {duration: 1, start: 85}
+  - {duration: 1, start: 86}
   - {duration: 1, start: 105}
   - {duration: 1, start: 125}
   - {duration: 1, start: 145}
@@ -38,7 +38,7 @@ task2:
   - {duration: 1, start: 225}
   - {duration: 1, start: 245}
   - {duration: 1, start: 265}
-  - {duration: 1, start: 285}
+  - {duration: 1, start: 288}
   wcet: 1
 task3:
   deadline: 30
@@ -47,14 +47,14 @@ task3:
   times:
   - {duration: 2, start: 6}
   - {duration: 1, start: 35}
-  - {duration: 1, start: 66}
-  - {duration: 1, start: 95}
+  - {duration: 2, start: 66}
+  - {duration: 2, start: 95}
   - {duration: 1, start: 126}
   - {duration: 2, start: 155}
   - {duration: 1, start: 186}
   - {duration: 1, start: 215}
   - {duration: 1, start: 246}
-  - {duration: 2, start: 275}
+  - {duration: 1, start: 275}
   wcet: 2
 task4:
   deadline: 30
@@ -63,14 +63,14 @@ task4:
   times:
   - {duration: 1, start: 8}
   - {duration: 1, start: 36}
-  - {duration: 1, start: 67}
-  - {duration: 1, start: 96}
+  - {duration: 1, start: 68}
+  - {duration: 1, start: 97}
   - {duration: 1, start: 127}
   - {duration: 1, start: 157}
   - {duration: 1, start: 187}
   - {duration: 1, start: 216}
   - {duration: 1, start: 247}
-  - {duration: 1, start: 277}
+  - {duration: 1, start: 276}
   wcet: 1
 task5:
   deadline: 40
@@ -78,7 +78,7 @@ task5:
   period: 50
   times:
   - {duration: 1, start: 10}
-  - {duration: 1, start: 68}
+  - {duration: 1, start: 69}
   - {duration: 1, start: 110}
   - {duration: 1, start: 166}
   - {duration: 1, start: 217}
@@ -90,7 +90,7 @@ task6:
   period: 50
   times:
   - {duration: 1, start: 11}
-  - {duration: 1, start: 69}
+  - {duration: 1, start: 70}
   - {duration: 1, start: 111}
   - {duration: 1, start: 167}
   - {duration: 1, start: 218}
@@ -106,7 +106,7 @@ task7:
   - {duration: 2, start: 128}
   - {duration: 1, start: 175}
   - {duration: 1, start: 226}
-  - {duration: 1, start: 278}
+  - {duration: 2, start: 277}
   wcet: 2
 task8:
   deadline: 50
@@ -114,9 +114,9 @@ task8:
   period: 50
   times:
   - {duration: 1, start: 28}
-  - {duration: 1, start: 77}
-  - {duration: 3, start: 130}
-  - {duration: 1, start: 176}
-  - {duration: 4, start: 227}
-  - {duration: 1, start: 279}
+  - {duration: 5, start: 77}
+  - {duration: 2, start: 130}
+  - {duration: 4, start: 176}
+  - {duration: 5, start: 227}
+  - {duration: 5, start: 279}
   wcet: 5

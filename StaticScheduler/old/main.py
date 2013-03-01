@@ -15,6 +15,7 @@ import util.utils as Utils
 from matplotlib import pyplot
 
 # Run all tasks from workload 1 and workload 2
+# This is the non-gtk version. run ui.py for the gtk main window version
 def runTasks():
 
   log = logging.getLogger("main")

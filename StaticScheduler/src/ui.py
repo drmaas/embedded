@@ -15,13 +15,13 @@ class StaticScheduler(gtk.Window):
     def __init__(self):
         super(StaticScheduler, self).__init__()
         
-        logging.config.fileConfig("conf/info.conf")
+        logging.config.fileConfig("../conf/info.conf")
         
         # setup workload input data
-        workloads = { 'workload1': { 'input':'input/workload1.yaml', 'schedulesummary':'output/schedule1.txt', 
-                      'schedule':'output/schedule1.yaml', 'executions':'output/executions1.yaml' },
-                      'workload2': { 'input':'input/workload2.yaml', 'schedulesummary':'output/schedule2.txt', 
-                      'schedule':'output/schedule2.yaml', 'executions':'output/executions2.yaml' } }
+        workloads = { 'workload1': { 'input':'../input/workload1.yaml', 'schedulesummary':'../output/schedule1.txt', 
+                      'schedule':'../output/schedule1.yaml', 'executions':'../output/executions1.yaml' },
+                      'workload2': { 'input':'../input/workload2.yaml', 'schedulesummary':'../output/schedule2.txt', 
+                      'schedule':'../output/schedule2.yaml', 'executions':'../output/executions2.yaml' } }
         
         self.set_title("Static Scheduler")
         self.set_size_request(300, 200)

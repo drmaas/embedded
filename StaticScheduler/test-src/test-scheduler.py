@@ -1,11 +1,13 @@
+#!/usr/bin/python
+
 import unittest
 import logging
 import logging.config
 
-from scheduler import Scheduler
-from processor import Processor
-from jobqueue import JobQueue
-from processormonitor import ProcessorMonitor
+from scheduler.scheduler import Scheduler
+from scheduler.processor import Processor
+from scheduler.jobqueue import JobQueue
+from scheduler.processormonitor import ProcessorMonitor
 import util.utils as Utils
 
 # Unit tests for the program modules
@@ -38,10 +40,11 @@ class Test(unittest.TestCase):
     print
  
   # Ensure processor busy works - execute task1 (wcet 2)
+  # This will fail as exec time is dynamic now
   def testProcessorBusy(self):
     print "testProcessorBusy():"
     self.y1['task1']['id'] = "task1"
-    self.proc.execute(self.y1['task1'])
+    self.proc.execute(self.y1['task1'], Utils.getRandomET)
     self.proc.incrTime()
     self.assertTrue(self.proc.busy())
     self.proc.incrTime()
