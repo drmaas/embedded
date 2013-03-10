@@ -51,6 +51,7 @@ def deepcopy(workload):
     newworkload[id] = task.copy()
   return newworkload
 
-# get a random execution time between 1 and worst case
+# just return wcet, random time not needed
 def getRandomET(wcet):
-  return random.randrange(1, wcet+1, 1)
+  #return random.randrange(1, wcet+1, 1)
+  return wcet

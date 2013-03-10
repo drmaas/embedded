@@ -25,8 +25,11 @@ class Plot(object):
         rec1 = mpl.patches.Rectangle((.1,.1),.1,.1,color='r')
         rec2 = mpl.patches.Rectangle((.1,.1),.1,.1,color='b')
         rec3 = mpl.patches.Rectangle((.1,.1),.1,.1,color='g')
-        legend = self.fig.legend( (rec1, rec2, rec3),
-                        ('busy', 'slack', 'idle'), 'lower right',
+        #legend = self.fig.legend( (rec1, rec2, rec3),
+        #                ('busy', 'slack', 'idle'), 'lower right',
+        #                prop=prop)
+        legend = self.fig.legend( (rec1, rec3),
+                        ('busy', 'idle'), 'lower right',
                         prop=prop)
        
        
