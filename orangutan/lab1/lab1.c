@@ -1,3 +1,5 @@
+// definitions of registers in iom1284p.h:
+// /usr/lib/avr/include/avr/iom1284p.h
 #define ECHO2LCD
 
 #include <pololu/orangutan.h>
@@ -22,10 +24,11 @@ volatile uint32_t G_ms_ticks = 0;
 
 volatile uint16_t G_red_period = 1000;
 volatile uint16_t G_green_period = 1000;
-volatile uint16_t G_yellow_period = 1000;
+volatile uint16_t G_yellow_period = 10;
 
 volatile uint16_t G_release_red = 0;
 
+volatile uint32_t G_loop_toggles = 0;
 volatile uint32_t G_red_toggles = 0;
 volatile uint32_t G_green_toggles = 0;
 volatile uint32_t G_yellow_toggles = 0;
@@ -47,7 +50,8 @@ int main(void) {
 	// You will construct this program in pieces.
 	// First, establish WCET analysis on a for loop to use for timing.
 	// Use the for loop to blink the red LED.
-	// Next, set up a system 1 ms software timer, and use that to "schedule" the blink
+        //	
+        // Next, set up a system 1 ms software timer, and use that to "schedule" the blink
 	// inside a cyclic executive.
 	//
 	// Blink the yellow LED using a separate timer with a 100ms resolution.
@@ -64,37 +68,39 @@ int main(void) {
 	char tempBuffer[32];
 	int length = 0;
 	
+	clear();	// clear the LCD
+
 	// Ininitialization here.
 	lcd_init_printf();	// required if we want to use printf() for LCD printing
 	init_timers();
 	init_LEDs();
 	init_menu();	// this is initialization of serial comm through USB
-	
-	clear();	// clear the LCD
 
 	//enable interrupts
 	sei();
 	
 	while (1) {
-		/* BEGIN with a simple toggle using for-loops. No interrupt timers */
-
+		//1) BEGIN with a simple toggle using for-loops. No interrupt timers */
 		// toggle the LED. Increment a counter.
-		//LED_TOGGLE(RED);
-		//G_red_toggles++;
-		//length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
-		//print_usb( tempBuffer, length );
-//#ifdef ECHO2LCD
-		//lcd_goto_xy(0,0);
-		//printf("R:%d ",G_red_toggles);
-//#endif
+/*
+		LED_TOGGLE(LOOP);
+		G_loop_toggles++;
+		length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
+		print_usb( tempBuffer, length );
+#ifdef ECHO2LCD
+		lcd_goto_xy(0,0);
+		printf("LOOP:%d ",G_loop_toggles);
+#endif
 
 		// create a for-loop to kill approximately 1 second
-		//for (i=0;i<100;i++) {
-		//    WAIT_10MS;
-		//}
-				
-		//use a software timer to "schedule" the RED LED toggle.
+		for (i=0;i<100;i++) {
+		    WAIT_10MS;
+		}
+*/
+		//2) use a software timer to "schedule" the RED LED toggle.
 		if (G_release_red) {
+
+			G_release_red = 0; 
 
                         //print debug info
                         length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
@@ -103,11 +109,15 @@ int main(void) {
                         lcd_goto_xy(0, 0);
                         printf("R:%d", G_red_toggles);
 #endif
-                        //toggel red led and increment count
+                        //toggle red led and increment count
 			LED_TOGGLE(RED);
 			G_red_toggles++;
-			G_release_red = 0; 
 		}
+
+#ifdef ECHO2LCD
+                lcd_goto_xy(0, 1);
+                printf("Y:%d", G_yellow_toggles);
+#endif
 
 		// Whenever you are ready, add in the menu task.
 		// Think of this as an external interrupt "releasing" the task.
