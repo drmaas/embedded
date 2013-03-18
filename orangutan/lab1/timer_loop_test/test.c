@@ -16,7 +16,7 @@ int main()
   volatile int i,j;
 
   // Measure time for loop execution (without test code)
-  long iteration = 10000;
+  long iteration = 20000;
   long test_iteration = 1000;
 
   //time to loop million times

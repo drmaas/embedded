@@ -16,7 +16,6 @@ extern uint16_t G_red_period;
 extern uint16_t G_green_period;
 extern uint16_t G_yellow_period;
 
-extern uint32_t G_loop_toggles;
 extern uint32_t G_red_toggles;
 extern uint32_t G_green_toggles;
 extern uint32_t G_yellow_toggles;
@@ -29,30 +28,29 @@ void init_LEDs() {
         uint32_t i;
 
         // Clear all data direction ports
-        DD_REG_LOOP = 0;
         DD_REG_RED = 0;
         DD_REG_YELLOW = 0;
+        DD_REG_GREEN = 0;
 
         // Configure data direction as output
-        DD_REG_LOOP |= BIT_LOOP;
         DD_REG_RED |= BIT_RED;
         DD_REG_YELLOW |= BIT_YELLOW;
+        DD_REG_GREEN |= BIT_GREEN;
 
         // Turn LEDs for two seconds to make sure they are working
-        LED_ON(LOOP);
         LED_ON(RED);
         LED_ON(YELLOW);
+        LED_ON(GREEN);
 
         //wait 1 sec 
         for (i=0;i<200;i++) WAIT_10MS;
 
         // Start all LEDs off
-        LED_OFF(LOOP);
         LED_OFF(RED);
         LED_OFF(YELLOW);
+        LED_OFF(GREEN);
 
         // clear toggle counters
-        G_loop_toggles = 0;
         G_green_toggles = 0;
         G_red_toggles = 0;
         G_yellow_toggles = 0;
@@ -132,15 +130,14 @@ ISR(TIMER3_COMPA_vect) {
         }
 }
 
-/* 
 // INTERRUPT HANDLER for green LED
-> ISR(XXXX) {
+ISR(TIMER1_COMPA_vect) {
 
 	// This the Interrupt Service Routine for tracking green toggles. The toggling is done in hardware.
 	// Each time the TCNT count is equal to the OCRxx register, this interrupt is enabled.
 	// This interrupts at the user-specified frequency for the green LED.
 	
+        int length = sprintf( tempBuffer, "G toggles %d\r\n", G_green_toggles );
+        print_usb( tempBuffer, length );
 	G_green_toggles++;
 }
-
-*/

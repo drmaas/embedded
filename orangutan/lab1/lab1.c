@@ -1,7 +1,7 @@
 // definitions of registers in iom1284p.h:
 // /usr/lib/avr/include/avr/iom1284p.h
 #define ECHO2LCD
-#define USE_RED_TIMER 0
+#define USE_RED_TIMER 1
 
 #include <pololu/orangutan.h>
 
