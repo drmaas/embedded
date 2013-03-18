@@ -125,6 +125,8 @@ ISR(TIMER3_COMPA_vect) {
         if ((G_yellow_ticks % G_yellow_period) == 0) {
             int length = sprintf( tempBuffer, "Y toggles %d\r\n", G_yellow_toggles );
             print_usb( tempBuffer, length );
+            lcd_goto_xy(0, 1);
+            printf("Y:%d", G_yellow_toggles);
             LED_TOGGLE(YELLOW);
             G_yellow_toggles++;
         }

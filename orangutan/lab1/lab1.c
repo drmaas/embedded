@@ -1,6 +1,7 @@
 // definitions of registers in iom1284p.h:
 // /usr/lib/avr/include/avr/iom1284p.h
 #define ECHO2LCD
+#define USE_RED_TIMER 0
 
 #include <pololu/orangutan.h>
 
@@ -82,23 +83,27 @@ int main(void) {
 	while (1) {
 		//1) BEGIN with a simple toggle using for-loops. No interrupt timers */
 		// toggle the LED. Increment a counter.
-/*
-		LED_TOGGLE(LOOP);
-		G_loop_toggles++;
-		length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
-		print_usb( tempBuffer, length );
+
+                if (USE_RED_TIMER != 1) {
+		    //1) BEGIN with a simple toggle using for-loops. No interrupt timers */
+		    // toggle the LED. Increment a counter.
+                    LED_TOGGLE(RED);
+		    G_loop_toggles++;
+		    length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
+		    print_usb( tempBuffer, length );
 #ifdef ECHO2LCD
-		lcd_goto_xy(0,0);
-		printf("LOOP:%d ",G_loop_toggles);
+		    lcd_goto_xy(0,0);
+		    printf("R:%d ",G_loop_toggles);
 #endif
 
-		// create a for-loop to kill approximately 1 second
-		for (i=0;i<100;i++) {
-		    WAIT_10MS;
-		}
-*/
-		//2) use a software timer to "schedule" the RED LED toggle.
-		if (G_release_red) {
+		    // create a for-loop to kill approximately 1 second
+		    for (i=0;i<100;i++) {
+		        WAIT_10MS;
+		    }
+                }
+                else {
+		    //2) use a software timer to "schedule" the RED LED toggle.
+		    if (G_release_red) {
 
 			G_release_red = 0; 
 
@@ -112,12 +117,8 @@ int main(void) {
                         //toggle red led and increment count
 			LED_TOGGLE(RED);
 			G_red_toggles++;
+                    }
 		}
-
-#ifdef ECHO2LCD
-                lcd_goto_xy(0, 1);
-                printf("Y:%d", G_yellow_toggles);
-#endif
 
 		// Whenever you are ready, add in the menu task.
 		// Think of this as an external interrupt "releasing" the task.
