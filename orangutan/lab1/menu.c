@@ -1,3 +1,5 @@
+#define ECHO2LCD
+
 #include "menu.h"
 #include "LEDs.h"
 #include "timer.h"
@@ -83,26 +85,30 @@ void process_received_string(const char* buffer)
 		// change toggle frequency for <color> LED
 		case 'T':
 		case 't':
-// >			//set_toggle(color,value);
+                        set_toggle(color,value);
 			break; 
 		// print counter for <color> LED 
 		case 'P':
 		case 'p':
 			switch(color) {
+				case 'r': 
 				case 'R': 
 					length = sprintf( tempBuffer, "R toggles: %d\r\n", G_red_toggles );
 					print_usb( tempBuffer, length ); 
 					break;
+				case 'g': 
 				case 'G': 
 					length = sprintf( tempBuffer, "G toggles: %d\r\n", G_green_toggles );
 					print_usb( tempBuffer, length ); 
 					break;
+				case 'y': 
 				case 'Y': 
 					length = sprintf( tempBuffer, "Y toggles: %d\r\n", G_yellow_toggles );
 					print_usb( tempBuffer, length ); 
 					break;
+				case 'a': 
 				case 'A': 
-					length = sprintf( tempBuffer, "Toggles R:%d G:%d Y:%d\r\n", G_red_toggles, G_green_toggles, G_yellow_toggles );
+					length = sprintf( tempBuffer, "Toggles R:%li G:%li Y:%li\r\n", G_red_toggles, G_green_toggles, G_yellow_toggles );
 					print_usb( tempBuffer, length ); 
 					break;
 				default: print_usb("Default in p(color). How?\r\n", 27 );
@@ -113,9 +119,13 @@ void process_received_string(const char* buffer)
 		case 'Z':
 		case 'z':
 			switch(color) {
+				case 'r':
 				case 'R': G_red_toggles=0; break;
+				case 'g':
 				case 'G': G_green_toggles=0; break;
+				case 'y':
 				case 'Y': G_yellow_toggles=0; break;
+				case 'a':
 				case 'A': G_red_toggles = G_green_toggles = G_yellow_toggles = 0; break;
 				default: print_usb("Default in z(color). How?\r\n", 27 );
 			}
@@ -123,10 +133,10 @@ void process_received_string(const char* buffer)
 		default:
 			print_usb( "Command does not compute.\r\n", 27 );
 		} // end switch(op_char) 
-		
+	
 	print_usb( MENU, MENU_LENGTH);
 
-} //end menu()
+} //end process_received_string()
 
 //---------------------------------------------------------------------------------------
 // If there are received bytes to process, this function loops through the receive_buffer
@@ -148,15 +158,24 @@ void check_for_new_bytes_received()
 	*/ 
 	char menuBuffer[32];
 	static int received = 0;
+        int i = 0;
+        char enter = 0x0D;
 	
 	// while there are unprocessed keystrokes in the receive_buffer, grab them and buffer
 	// them into the menuBuffer
 	while(serial_get_received_bytes(USB_COMM) != receive_buffer_position)
 	{
+                //break and process at 32 byte limit
+                if (received >= 30) {
+                    menuBuffer[received] = enter;
+                    received++;
+                    break;
+                }
+
 		// place in a buffer for processing
 		menuBuffer[received] = receive_buffer[receive_buffer_position];
-		++received;
-		
+		received++;
+
 		// Increment receive_buffer_position, but wrap around when it gets to
 		// the end of the buffer. 
 		if ( receive_buffer_position == sizeof(receive_buffer) - 1 )
@@ -168,24 +187,24 @@ void check_for_new_bytes_received()
 			receive_buffer_position++;
 		}
 	}
-	// If there were keystrokes processed, check if a menue command
-	if (received) {
-		// if only 1 received, it was MOST LIKELY a carriage return. 
-		// Even if it was a single keystroke, it is not a menu command, so ignore it.
+
+	// If there were keystrokes processed, check if a menu command
+	if (received > 0 && (menuBuffer[received-1]==enter)) {
 		if ( 1 == received ) {
-			received = 0;
-			return;
+	        	received = 0;
+	        	return;
 		}
 		// Process buffer: terminate string, process, reset index to beginning of array to receive another command
 		menuBuffer[received] = '\0';
 #ifdef ECHO2LCD
 		lcd_goto_xy(0,1);			
 		print("RX: (");
-		print_long(received);
+		print_long(received-1);
 		print_character(')');
-		for (int i=0; i<received; i++)
+                int i = 0;
+		for (i=0; i<received-1; i++)
 		{
-			print_character(menuBuffer[i]);
+	            print_character(menuBuffer[i]);
 		}
 #endif
 		process_received_string(menuBuffer);

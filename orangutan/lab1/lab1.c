@@ -25,14 +25,15 @@ volatile uint32_t G_ms_ticks = 0;
 
 volatile uint16_t G_red_period = 1000;
 volatile uint16_t G_green_period = 1000;
-volatile uint16_t G_yellow_period = 10;
+volatile uint16_t G_yellow_period = 1000;
 
 volatile uint16_t G_release_red = 0;
 
-volatile uint32_t G_loop_toggles = 0;
 volatile uint32_t G_red_toggles = 0;
 volatile uint32_t G_green_toggles = 0;
 volatile uint32_t G_yellow_toggles = 0;
+
+volatile uint32_t f_IO = 20000000;
 
 volatile uint8_t G_flag = 0; // generic flag for debugging
 
@@ -88,17 +89,13 @@ int main(void) {
 		    //1) BEGIN with a simple toggle using for-loops. No interrupt timers */
 		    // toggle the LED. Increment a counter.
                     LED_TOGGLE(RED);
-		    G_loop_toggles++;
-		    length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
-		    print_usb( tempBuffer, length );
-#ifdef ECHO2LCD
-		    lcd_goto_xy(0,0);
-		    printf("R:%d ",G_loop_toggles);
-#endif
+		    G_red_toggles++;
+		    //length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
+		    //print_usb( tempBuffer, length );
 
 		    // create a for-loop to kill approximately 1 second
-		    for (i=0;i<100;i++) {
-		        WAIT_10MS;
+		    for (i=0;i<1000;i++) {
+		        WAIT_1MS;
 		    }
                 }
                 else {
@@ -108,12 +105,8 @@ int main(void) {
 			G_release_red = 0; 
 
                         //print debug info
-                        length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
-                        print_usb( tempBuffer, length );
-#ifdef ECHO2LCD
-                        lcd_goto_xy(0, 0);
-                        printf("R:%d", G_red_toggles);
-#endif
+                        //length = sprintf( tempBuffer, "R toggles %d\r\n", G_red_toggles );
+                        //print_usb( tempBuffer, length );
                         //toggle red led and increment count
 			LED_TOGGLE(RED);
 			G_red_toggles++;
@@ -122,10 +115,8 @@ int main(void) {
 
 		// Whenever you are ready, add in the menu task.
 		// Think of this as an external interrupt "releasing" the task.
-/*
 		serial_check();
 		check_for_new_bytes_received();
-*/
 					
 	} //end while loop
 } //end main

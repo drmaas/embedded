@@ -4,9 +4,10 @@
 #include <avr/interrupt.h>
 
 // GLOBALS
-extern uint32_t G_green_ticks;
 extern uint32_t G_yellow_ticks;
 extern uint32_t G_ms_ticks;
+
+extern uint32_t f_IO;
 
 extern uint16_t G_red_period;
 extern uint16_t G_green_period;
@@ -31,15 +32,18 @@ void init_timers() {
         TCCR0B &= ~(1 << WGM02);
 
         //TOP register is OCR0A, value is 78
-        OCR0A = 78;
+        //OCR0A = 78;
+        long prescalar = 256;
+        double frequency = 1000.00;
+        OCR0A = get_timer_top_value(f_IO, prescalar, frequency);
 
         // Using pre-scaler 256, using CS0(2:0) = 4
         TCCR0B |= (1 << CS02);
         TCCR0B &= ~(1 << CS01);
         TCCR0B &= ~(1 << CS00);
 
-	length = sprintf( tempBuffer, "Initializing red clock to freq %dHz (period %d ms)\r\n",1000,1);	
-        print_usb( tempBuffer, length );
+	//length = sprintf( tempBuffer, "Initializing red clock to freq %dHz (period %d ms)\r\n",1000,1);	
+        //print_usb( tempBuffer, length );
 
         //Enable output compare match interrupt on timer 0
         TIMSK0 |= ( 1 << OCIE0A );
@@ -71,10 +75,12 @@ void init_timers() {
         // 10 = 20M / (256*7812.5)
 	// Set OCR3A appropriately for TOP to generate desired frequency using Y_TIMER_RESOLUTION (100 ms).
 	// NOTE: This is not the toggle frequency, rather a tick frequency used to time toggles.
-	OCR3A = 7812;
-
-	length = sprintf( tempBuffer, "Initializing yellow clock to freq %dHz (period %d ms)\r\n",G_yellow_period,100);	
-        print_usb( tempBuffer, length );
+	//OCR3A = 7812;
+        prescalar = 256;
+        frequency = 10.00;
+        OCR3A = get_timer_top_value(f_IO, prescalar, frequency);
+	//length = sprintf( tempBuffer, "Initializing yellow clock to freq %dHz (period %d ms)\r\n",G_yellow_period,100);	
+        //print_usb( tempBuffer, length );
 
 	//Enable output compare match interrupt on timer 3A
         TIMSK3 |= ( 1 << OCIE3A );
@@ -105,13 +111,16 @@ void init_timers() {
         TCCR1B &= ~(1 << CS11);
         TCCR1B |= (1 << CS10);
 
-	// Interrupt Frequency: ? = f_IO / (1024*OCR1A)
+	// Interrupt Frequency: Hz? = f_IO / (1024*OCR1A)
 	// Set OCR1A appropriately for TOP to generate desired frequency.
 	// NOTE: This IS the toggle frequency.
         // Test this with frequency 1, so OCR1A=19531
-        OCR1A = 19531;
-	length = sprintf( tempBuffer, "Initializing green clock to freq %dHz (period %d ms)\r\n",G_green_period,1);	
-        print_usb( tempBuffer, length );
+        //OCR1A = 19531;
+        prescalar = 1024;
+        frequency = 1.00;
+        OCR1A = get_timer_top_value(f_IO, prescalar, frequency);
+	//length = sprintf( tempBuffer, "Initializing green clock to freq %dHz (period %d ms)\r\n",G_green_period,1);	
+        //print_usb( tempBuffer, length );
 
 	// A match to this will toggle the green LED.
 	// Regardless of its value (provided it is less than OCR3A), it will match at the frequency of timer 3.
@@ -119,6 +128,11 @@ void init_timers() {
 
 	//Enable output compare match interrupt on timer 1B
         TIMSK1 |= (1 << OCIE1A);
+}
+
+//get value we should set top register to based on clock speed, prescalar, and desired frequency
+long get_timer_top_value(long clock, long prescalar, double frequency) {
+    return clock/(prescalar*frequency);
 }
 
 //INTERRUPT HANDLERS

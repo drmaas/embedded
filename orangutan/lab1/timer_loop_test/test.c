@@ -21,23 +21,23 @@ int main()
 
   //TODO: possible only call ticks_to_microseceonds once after all times are recorded.
   //time to loop million times
-  long time1 = ticks_to_microseconds(get_ticks());
+  long time1 = get_ticks();
   for (i=0; i < iteration; i++);
-  long time2 = ticks_to_microseconds(get_ticks());
+  long time2 = get_ticks();
   long loop1time = time2 - time1;
 
-  long time3 = ticks_to_microseconds(get_ticks());
+  long time3 = get_ticks();
   for (i=0; i < iteration; i++) {
     for(j=0;j<test_iteration;j++);
   }
-  long time4 = ticks_to_microseconds(get_ticks());
+  long time4 = get_ticks();
   long loop2time = time4 - time3;
 
   //calculate time to loop 1000 times in microseconds
   //result is about .924 ms
   //so 1082 iterations take 1 ms
   //for some reason this is actually 2 ms, so divide by 2
-  long wcet = (loop2time - loop1time)/iteration;
+  long wcet = ticks_to_microseconds(loop2time - loop1time)/iteration;
   long one_ms = (1000*test_iteration)/(wcet*2); 
 
   clear();
