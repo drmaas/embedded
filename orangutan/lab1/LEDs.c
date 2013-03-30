@@ -112,6 +112,12 @@ void set_toggle(char color, int ms) {
 // INTERRUPT Names are defined in iom1284p.h
 // INTERRUPT HANDLER for yellow LED
 ISR(TIMER3_COMPA_vect) {
+        //sei();
+        //TEST: WAIT 510ms
+        //int i;
+	//for (i=0;i<510;i++) {
+        //    WAIT_1MS;
+        //} 
 
 	// This the Interrupt Service Routine for Toggling the yellow LED.
 	// Each time the TCNT count is equal to the OCRxx register, this interrupt is enabled.
@@ -134,7 +140,13 @@ ISR(TIMER3_COMPA_vect) {
 
 // INTERRUPT HANDLER for green LED
 ISR(TIMER1_COMPA_vect) {
-
+        //sei();
+        //TEST: WAIT 510ms
+        //int i;
+	//for (i=0;i<510;i++) {
+        //    WAIT_1MS;
+        //}
+ 
 	// This the Interrupt Service Routine for tracking green toggles. The toggling is done in hardware.
 	// Each time the TCNT count is equal to the OCRxx register, this interrupt is enabled.
 	// This interrupts at the user-specified frequency for the green LED.
