@@ -1,0 +1,7 @@
+Use PWM on Timer 2 - OCR2B gets set to the speed you want (-255 to 255)
+Modify TOP to change the pwm frequency
+See the set_motor_speed orangutan function as an example - /home/drmaas/libpololu-avr/src/OrangutanMotors
+
+04/03/2013:  timer ISR is working
+             TODO: work on creating a motor function like set_motor2_speed(<-255 -255>)
+             actual speed set in OCR2B is 0-255, and IO_C6 = 0 for forward (PIN_OFF(DIRECTION)), 1 for reverse (PIN_ON(DIRECTION))
