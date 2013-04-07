@@ -16,6 +16,6 @@ volatile uint32_t __ii;
 #define WAIT_1MS {for (__ii=0;__ii<FOR_COUNT_1MS; __ii++);}
 
 void init_timers();
-long get_timer_top_value(long clock, long prescalar, double frequency);
+long get_timer_top_value(long clock, long prescalar, long frequency);
 
 #endif //__TIMER_H

@@ -1,7 +1,13 @@
 #include "motor.h"
 #include "digital.h"
 
+//set position (degrees from current)
+void set_desired_position(int position) {
+
+}
+
 //assumes timer related to motor2 has already been initialized
+//set speed to speed
 void set_motor2_speed(int speed) {
 
         unsigned char reverse = 0;
@@ -36,4 +42,9 @@ void set_motor2_speed(int speed) {
                 }
         }
 
+}
+
+//return speed (T) from OCR2B
+int get_motor2_speed() {
+    return OCR2B;
 }

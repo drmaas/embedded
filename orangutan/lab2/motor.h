@@ -8,6 +8,8 @@
 
 #include <string.h>
 
+void set_desired_position(int position);
 void set_motor2_speed(int speed);
+int get_motor2_speed();
 
 #endif

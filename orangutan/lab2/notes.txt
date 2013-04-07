@@ -5,3 +5,18 @@ See the set_motor_speed orangutan function as an example - /home/drmaas/libpolol
 04/03/2013:  timer ISR is working
              TODO: work on creating a motor function like set_motor2_speed(<-255 -255>)
              actual speed set in OCR2B is 0-255, and IO_C6 = 0 for forward (PIN_OFF(DIRECTION)), 1 for reverse (PIN_ON(DIRECTION))
+
+04/06/2013:  motor function works for forward, reverse.
+             TODO: create functionality to read encoder position and velocity values and set up pin change interrupts on the encoder port pins. set up pin change interrupts on these port pins and count the number of signal changes to track the position of the motor.
+             //calculate velocity. position and time variables should be global
+             //reference position means for forward/backward by x degrees
+             new_p_ref = p_ref + current_position
+             long calc_v() {
+               prev_position = position; 
+               prev_time = time;
+               position = encoders_get_counts_m2()*5.625; //gives us position in degrees
+               time = get_ticks
+               velocity = (position-prev_position)/(ticks_to_ms(time-prev_time));
+             }
+04/07/2013:  velocity and position from encoder working.
+             TODO: work on equation to get to desired position               

@@ -1,5 +1,6 @@
 #include "timer.h"
 #include "digital.h"
+#include "encoder.h"
 
 #include <avr/interrupt.h>
 
@@ -7,10 +8,14 @@
 extern uint32_t f_IO;
 extern uint32_t T_ms_ticks;
 
+volatile long period = 1000; //timer2 period
+volatile long velocity_period = 100; //check velocity every 100 ms
+volatile long velocity = 0;
+
 void init_timers() {
 
         int length;
-        char tempBuffer[64];
+        char tempBuffer[128];
 
         // -------------------------  TIMER2 setup --------------------------------------//
         // Software Clock Using Timer/Counter 2.
@@ -36,7 +41,7 @@ void init_timers() {
 
         //TOP register is OCR2A, value is 78
         long prescalar = 256;
-        double frequency = 1000.00;
+        long frequency = period;
         OCR2A = get_timer_top_value(f_IO, prescalar, frequency);
 
         //clear OCR2B
@@ -48,16 +53,14 @@ void init_timers() {
         //Enable output compare match interrupt on timer 2
         TIMSK2 |= ( 1 << OCIE2A );
 
-        set_motor2_speed(100);
+        set_motor2_speed(20);
 
 }
 
 //get value we should set top register to based on clock speed, prescalar, and desired frequency
-long get_timer_top_value(long clock, long prescalar, double frequency) {
+long get_timer_top_value(long clock, long prescalar, long frequency) {
     return clock/(prescalar*frequency);
 }
-
-//INTERRUPT HANDLERS
 
 //Interrupt for COMPA on TIMER2
 ISR(TIMER2_COMPA_vect) {
@@ -68,8 +71,16 @@ ISR(TIMER2_COMPA_vect) {
         int length;
         char tempBuffer[64];
 
-        length = sprintf( tempBuffer, "Timer2 count: %li.\r\n",T_ms_ticks);
-        print_usb( tempBuffer, length );
+        //calculate current position
+        long position = current_angle_position();
+     
+        //calculate current speed
+        if (T_ms_ticks % velocity_period == 0) {
+            velocity = current_velocity(position,velocity_period); 
+        }
+ 
+        length = sprintf( tempBuffer, "Timer2 position: %li velocity: %li.\r\n",position,velocity);
+        //print_usb( tempBuffer, length );
 
         // Increment ticks
         T_ms_ticks++;

@@ -2,6 +2,7 @@
 
 #include "menu.h"
 #include "digital.h"
+#include "motor.h"
 #include "timer.h"
 
 #include <stdio.h>
@@ -27,14 +28,12 @@ void print_usb( char *buffer, int n ) {
 // This immediately readies the board for serial comm
 void init_menu() {
 	
-	char printBuffer[32];
-	
 	// Set the baud rate to 9600 bits per second.  Each byte takes ten bit
 	// times, so you can get at most 960 bytes per second at this speed.
 	serial_set_baud_rate(USB_COMM, 9600);
 
 	// Start receiving bytes in the ring buffer.
-	serial_receive_ring(USB_COMM, receive_buffer, sizeof(receive_buffer));
+	serial_receive_ring(USB_COMM, receive_buffer, 32); //sizeof(receive_buffer));
 
 	print_usb( "USB Serial Initialized\r\n", 24);
 	print_usb( MENU, MENU_LENGTH );
@@ -44,7 +43,6 @@ void init_menu() {
 // process_received_string: Parses a menu command (series of keystrokes) that 
 // has been received on USB_COMM and processes it accordingly.
 // The menu command is buffered in check_for_new_bytes_received (which calls this function).
-/*
 void process_received_string(const char* buffer)
 {
 	// Used to pass to USB_COMM for serial communication
@@ -52,80 +50,34 @@ void process_received_string(const char* buffer)
 	char tempBuffer[32];
 	
 	// parse and echo back to serial comm window (and optionally the LCD)
-	char color;
 	char op_char;
 	int value;
 	int parsed;
-	parsed = sscanf(buffer, "%c %c %d", &op_char, &color, &value);
+	parsed = sscanf(buffer, "%c %d", &op_char, &value);
 #ifdef ECHO2LCD
 	lcd_goto_xy(0,0);
-	printf("Got %c %c %d\n", op_char, color, value);
+	printf("Got %c %d\n", op_char, value);
 #endif
-	length = sprintf( tempBuffer, "Op:%c C:%c V:%d\r\n", op_char, color, value );
+	length = sprintf( tempBuffer, "Op:%c V:%d\r\n", op_char, value );
 	print_usb( tempBuffer, length );
 	
-	// convert color to upper and check if valid
-	color -= 32*(color>='a' && color<='z');
-	switch (color) {
-		case 'R':
-		case 'G':
-		case 'Y': 
-		case 'A': break;
-		default:
-			print_usb( "Bad Color. Try {RGYA}\r\n", 23 );
-			print_usb( MENU, MENU_LENGTH);
-			return;
-	}
-
 	// Check valid command and implement
 	switch (op_char) {
-		// change toggle frequency for <color> LED
-		case 'T':
-		case 't':
-                        set_toggle(color,value);
+                // set desired speed for testing (this is T)
+                case 'S':
+                case 's':
+                        set_motor2_speed(value);
+                        break;
+		// set desired positon (degrees from current)
+		case 'R':
+		case 'r':
+                        set_desired_position(value);
 			break; 
-		// print counter for <color> LED 
-		case 'P':
-		case 'p':
-			switch(color) {
-				case 'r': 
-				case 'R': 
-					length = sprintf( tempBuffer, "R toggles: %d\r\n", G_red_toggles );
-					print_usb( tempBuffer, length ); 
-					break;
-				case 'g': 
-				case 'G': 
-					length = sprintf( tempBuffer, "G toggles: %d\r\n", G_green_toggles );
-					print_usb( tempBuffer, length ); 
-					break;
-				case 'y': 
-				case 'Y': 
-					length = sprintf( tempBuffer, "Y toggles: %d\r\n", G_yellow_toggles );
-					print_usb( tempBuffer, length ); 
-					break;
-				case 'a': 
-				case 'A': 
-					length = sprintf( tempBuffer, "Toggles R:%li G:%li Y:%li\r\n", G_red_toggles, G_green_toggles, G_yellow_toggles );
-					print_usb( tempBuffer, length ); 
-					break;
-				default: print_usb("Default in p(color). How?\r\n", 27 );
-			}
-			break;
-
-		// zero counter for <color> LED 
-		case 'Z':
-		case 'z':
-			switch(color) {
-				case 'r':
-				case 'R': G_red_toggles=0; break;
-				case 'g':
-				case 'G': G_green_toggles=0; break;
-				case 'y':
-				case 'Y': G_yellow_toggles=0; break;
-				case 'a':
-				case 'A': G_red_toggles = G_green_toggles = G_yellow_toggles = 0; break;
-				default: print_usb("Default in z(color). How?\r\n", 27 );
-			}
+		// print values of Kd, Kp, Vm, Pr, Pm, and T 
+		case 'V':
+		case 'v':
+			length = sprintf( tempBuffer, "Current parameters: %d %d %d %d %d %d\r\n", 1,2,3,4,5,get_motor2_speed() );
+			print_usb( tempBuffer, length ); 
 			break;
 		default:
 			print_usb( "Command does not compute.\r\n", 27 );
@@ -134,13 +86,11 @@ void process_received_string(const char* buffer)
 	print_usb( MENU, MENU_LENGTH);
 
 } //end process_received_string()
-*/
 
 //---------------------------------------------------------------------------------------
 // If there are received bytes to process, this function loops through the receive_buffer
 // accumulating new bytes (keystrokes) in another buffer for processing.
-void check_for_new_bytes_received()
-{
+void check_for_new_bytes_received() {
 	/* 
 	The receive_buffer is a ring buffer. The call to serial_check() (you should call prior to this function) fills the buffer.
 	serial_get_received_bytes is an array index that marks where in the buffer the most current received character resides. 
@@ -205,7 +155,7 @@ void check_for_new_bytes_received()
 	            print_character(menuBuffer[i]);
 		}
 #endif
-		//process_received_string(menuBuffer);
+		process_received_string(menuBuffer);
 		received = 0;
 	}
 }
@@ -215,8 +165,6 @@ void check_for_new_bytes_received()
 // finish transmitting on USB_COMM.  We must call this before modifying
 // send_buffer or trying to send more bytes, because otherwise we could
 // corrupt an existing transmission.
-//TODO: this corrupts the timer, in that if the serial terminal is open, timer works, but when closed,
-//timer pauses.
 void wait_for_sending_to_finish()
 {
 	while(!serial_send_buffer_empty(USB_COMM))

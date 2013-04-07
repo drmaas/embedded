@@ -16,7 +16,7 @@
 #define PORT_DIRECTION PORTC
 #define PORT_PWM PORTD
 
-// define the bit-masks for each port that the LEDs are attached to
+// define the bit-masks for each port that the pins are attached to
 #define BIT_DIRECTION      ( 1 << PORTC6 )
 #define BIT_PWM    ( 1 << PORTD6 )
 
