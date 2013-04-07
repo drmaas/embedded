@@ -7,10 +7,12 @@
 // GLOBALS
 extern uint32_t f_IO;
 extern uint32_t T_ms_ticks;
+extern int G_velocity_period;
 
 volatile long period = 1000; //timer2 period
-volatile long velocity_period = 100; //check velocity every 100 ms
-volatile long velocity = 0;
+volatile long current_velocity = 0;
+
+volatile int LOGGING = 0;
 
 void init_timers() {
 
@@ -62,6 +64,15 @@ long get_timer_top_value(long clock, long prescalar, long frequency) {
     return clock/(prescalar*frequency);
 }
 
+//toggle logging
+void toggle_logging() {
+    LOGGING = ~LOGGING;
+}
+
+long get_current_velocity() {
+    return current_velocity;
+}
+
 //Interrupt for COMPA on TIMER2
 ISR(TIMER2_COMPA_vect) {
 
@@ -72,14 +83,14 @@ ISR(TIMER2_COMPA_vect) {
         char tempBuffer[64];
 
         //calculate current position
-        long position = current_angle_position();
+        long position = current_position();
      
         //calculate current speed
-        if (T_ms_ticks % velocity_period == 0) {
-            velocity = current_velocity(position,velocity_period); 
+        if (T_ms_ticks % G_velocity_period == 0) {
+            current_velocity = calculate_velocity(position);
         }
  
-        length = sprintf( tempBuffer, "Timer2 position: %li velocity: %li.\r\n",position,velocity);
+        length = sprintf( tempBuffer, "Timer2 position: %li velocity: %li.\r\n",position,current_velocity);
         //print_usb( tempBuffer, length );
 
         // Increment ticks

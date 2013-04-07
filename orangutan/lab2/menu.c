@@ -3,6 +3,8 @@
 #include "menu.h"
 #include "digital.h"
 #include "motor.h"
+#include "encoder.h"
+#include "interpolater.h"
 #include "timer.h"
 
 #include <stdio.h>
@@ -65,6 +67,7 @@ void process_received_string(const char* buffer)
 	print_usb( tempBuffer, length );
 	
 	// Check valid command and implement
+        int kd,kp;
 	switch (op_char) {
                 // set desired speed for testing (this is T)
                 case 'S':
@@ -76,12 +79,35 @@ void process_received_string(const char* buffer)
 		case 'r':
                         set_desired_position(value);
 			break; 
+                // start logging pr, pm, T
+                case 'L':
+                case 'l':
+                        toggle_logging();
+                        break;
 		// print values of Kd, Kp, Vm, Pr, Pm, and T 
 		case 'V':
 		case 'v':
-			length = sprintf( tempBuffer, "Current parameters: %d %d %d %d %d %d\r\n", 1,2,3,4,5,get_motor2_speed() );
+                        kd = get_kd();
+                        kp = get_kp();
+                        int pr = get_desired_position();
+                        int pm = current_position();
+                        long vm = get_current_velocity();
+                        int t = get_motor2_speed();
+			length = sprintf( tempBuffer, "Current parameters: %d %d %li %d %d %d\r\n", kd,kp,vm,pr,pm,t );
 			print_usb( tempBuffer, length ); 
 			break;
+                //increase kp
+                case 'P':
+                        break;
+                //decrease kp
+                case 'p':
+                        break;
+                //increase kd
+                case 'D':
+                        break;
+                //decrease kd
+                case 'd':
+                        break;
 		default:
 			print_usb( "Command does not compute.\r\n", 27 );
 		} // end switch(op_char) 
@@ -122,11 +148,6 @@ void check_for_new_bytes_received() {
 
 		// place in a buffer for processing
 		menuBuffer[received] = receive_buffer[receive_buffer_position];
-		
-                lcd_goto_xy(0,0);			
-	        print_character(menuBuffer[received]);
-                print_long(received);
-
 		received++;
 
 		// Increment receive_buffer_position, but wrap around when it gets to

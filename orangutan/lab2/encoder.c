@@ -10,6 +10,8 @@ volatile long prev_position = 0;
 volatile long prev_time = 0;
 volatile long prev_velocity = 0;
 
+extern int G_velocity_period;
+
 //initialize encoder
 void init_encoder() {
 
@@ -55,18 +57,18 @@ unsigned char get_m2b_value() {
 }
 
 //get current motor position in ticks
-long current_angle_position() {
+long current_position() {
     return global_counts_m2;
 }
 
 //get current velocity in inches/min
-long current_velocity(long current_position, long delay) {
+long calculate_velocity(long current_position) {
     long velocity = 0;
     if (current_position == prev_position) {
         velocity = prev_velocity;
     }
     else {
-        velocity = (((current_position - prev_position)*(1000.00/delay)*60)/WHEEL_TICKS)*CIRCUMFERENCE;
+        velocity = (((current_position - prev_position)*(1000.00/G_velocity_period)*60)/WHEEL_TICKS)*CIRCUMFERENCE;
         prev_velocity = velocity;
     }
     prev_position = current_position;

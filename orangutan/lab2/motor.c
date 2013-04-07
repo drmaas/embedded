@@ -1,11 +1,6 @@
 #include "motor.h"
 #include "digital.h"
 
-//set position (degrees from current)
-void set_desired_position(int position) {
-
-}
-
 //assumes timer related to motor2 has already been initialized
 //set speed to speed
 void set_motor2_speed(int speed) {
@@ -17,8 +12,8 @@ void set_motor2_speed(int speed) {
                 speed = -speed;
                 reverse = 1;
         }
-        if (speed > 0xFF) {
-                 speed = 0xFF;
+        if (speed > 255) {
+                 speed = 255;
         }
 
         //set speed

@@ -15,7 +15,7 @@ PORT ?= /dev/ttyACM0
 AVRDUDE=avrdude
 
 TARGET=lab1
-OBJECT_FILES=lab2.o digital.o timer.o motor.o encoder.o menu.o
+OBJECT_FILES=lab2.o digital.o timer.o motor.o encoder.o interpolater.o menu.o
 
 all: $(TARGET).hex
 

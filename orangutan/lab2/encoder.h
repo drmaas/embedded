@@ -13,8 +13,8 @@
 #define CIRCUMFERENCE 8 //about 8 inches
 
 void init_encoder();
-long current_angle_position();
-long current_velocity(long current_position, long delay);
+long current_position();
+long calculate_velocity(long current_position);
 unsigned char get_m2a_value();
 unsigned char get_m2b_value();
 
