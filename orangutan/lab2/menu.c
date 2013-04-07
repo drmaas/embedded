@@ -11,9 +11,12 @@
 // GLOBALS
 
 // local "global" data structures
-char receive_buffer[32];
 unsigned char receive_buffer_position;
+char receive_buffer[32];
 char send_buffer[32];
+char menuBuffer[32];
+int received = 0;
+char enter = 0x0D;
 
 // A generic function for whenever you want to print to your serial comm window.
 // Provide a string and the length of that string. My serial comm likes "\r\n" at 
@@ -104,10 +107,7 @@ void check_for_new_bytes_received() {
 	The menuBuffer is used to hold all keystrokes prior to the carriage return. The "received" variable, which indexes menuBuffer, is reset to 0
 	after each carriage return.
 	*/ 
-	char menuBuffer[32];
-	static int received = 0;
         int i = 0;
-        char enter = 0x0D;
 	
 	// while there are unprocessed keystrokes in the receive_buffer, grab them and buffer
 	// them into the menuBuffer
@@ -122,6 +122,11 @@ void check_for_new_bytes_received() {
 
 		// place in a buffer for processing
 		menuBuffer[received] = receive_buffer[receive_buffer_position];
+		
+                lcd_goto_xy(0,0);			
+	        print_character(menuBuffer[received]);
+                print_long(received);
+
 		received++;
 
 		// Increment receive_buffer_position, but wrap around when it gets to
@@ -138,6 +143,7 @@ void check_for_new_bytes_received() {
 
 	// If there were keystrokes processed, check if a menu command
 	if (received > 0 && (menuBuffer[received-1]==enter)) {
+		
 		if ( 1 == received ) {
 	        	received = 0;
 	        	return;
