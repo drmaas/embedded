@@ -9,7 +9,7 @@ extern uint32_t f_IO;
 extern uint32_t T_ms_ticks;
 extern int G_velocity_period;
 
-volatile long period = 1000; //timer2 period
+volatile long period = 781; //timer2 period to get us to TOP of 100
 volatile long current_velocity = 0;
 
 volatile int LOGGING = 0;
@@ -55,8 +55,6 @@ void init_timers() {
         //Enable output compare match interrupt on timer 2
         TIMSK2 |= ( 1 << OCIE2A );
 
-        set_motor2_speed(20);
-
 }
 
 //get value we should set top register to based on clock speed, prescalar, and desired frequency
@@ -74,6 +72,7 @@ long get_current_velocity() {
 }
 
 //Interrupt for COMPA on TIMER2
+//TODO: THIS IS ONLY FOR TESTING. Separate ISR for PID (1KHz) and Interpolater (500Hz for example)
 ISR(TIMER2_COMPA_vect) {
 
         // This is the Interrupt Service Routine for Timer2
