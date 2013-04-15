@@ -16,7 +16,8 @@
 
 // GLOBALS
 volatile uint32_t f_IO = 20000000;
-volatile uint32_t T_ms_ticks = 0;
+volatile uint32_t PID_ticks = 0;
+volatile uint32_t INT_ticks = 0;
 volatile int G_velocity_period = 500;
 
 int main(void) {

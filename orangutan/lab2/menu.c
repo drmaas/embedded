@@ -78,6 +78,7 @@ void process_received_string(const char* buffer)
 		case 'R':
 		case 'r':
                         set_desired_position(value);
+                        set_start_position(current_position());
 			break; 
                 // start logging pr, pm, T
                 case 'L':
@@ -89,9 +90,9 @@ void process_received_string(const char* buffer)
 		case 'v':
                         kd = get_kd();
                         kp = get_kp();
-                        int pr = get_desired_position();
+                        int pr = desired_position();
                         int pm = current_position();
-                        long vm = get_current_velocity();
+                        long vm = current_velocity();
                         int t = get_motor2_speed();
 			length = sprintf( tempBuffer, "Current parameters: %d %d %li %d %d %d\r\n", kd,kp,vm,pr,pm,t );
 			print_usb( tempBuffer, length ); 

@@ -18,6 +18,5 @@ volatile uint32_t __ii;
 void init_timers();
 long get_timer_top_value(long clock, long prescalar, long frequency);
 void toggle_logging();
-long get_current_velocity();
 
 #endif //__TIMER_H

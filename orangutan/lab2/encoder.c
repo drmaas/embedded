@@ -9,6 +9,9 @@ volatile unsigned char global_last_m2b_val;
 volatile long prev_position = 0;
 volatile long prev_time = 0;
 volatile long prev_velocity = 0;
+volatile long start_pos = 0;
+volatile long desired_pos = 0;
+volatile long velocity = 0;
 
 extern int G_velocity_period;
 
@@ -58,20 +61,36 @@ unsigned char get_m2b_value() {
 
 //get current motor position in ticks
 long current_position() {
+    cli(); 
     return global_counts_m2;
+    sei();
+}
+
+//convert angle to steps
+long angleToSteps(long angle) {
+    return angle*(WHEEL_TICKS/CIRCLE);
+}
+
+//convert to degrees by using 5.625 degrees/tick (360/64)
+long current_degrees(long position) {
+    return (position*(CIRCLE/WHEEL_TICKS))%360;
 }
 
 //get current velocity in inches/min
-long calculate_velocity(long current_position) {
-    long velocity = 0;
-    if (current_position == prev_position) {
+long calculate_velocity(long position) {
+    if (position == prev_position) {
         velocity = prev_velocity;
     }
     else {
-        velocity = (((current_position - prev_position)*(1000.00/G_velocity_period)*60)/WHEEL_TICKS)*CIRCUMFERENCE;
+        velocity = (((position - prev_position)*(1000.00/G_velocity_period)*60)/WHEEL_TICKS)*CIRCUMFERENCE;
         prev_velocity = velocity;
     }
-    prev_position = current_position;
+    prev_position = position;
+    return velocity;
+}
+
+//get current speed
+long current_velocity() {
     return velocity;
 }
 

@@ -1,16 +1,19 @@
 #include "timer.h"
 #include "digital.h"
+#include "interpolater.h"
 #include "encoder.h"
 
 #include <avr/interrupt.h>
 
 // GLOBALS
 extern uint32_t f_IO;
-extern uint32_t T_ms_ticks;
+extern uint32_t PID_ticks;
+extern uint32_t INT_ticks;
 extern int G_velocity_period;
 
-volatile long period = 781; //timer2 period to get us to TOP of 100
-volatile long current_velocity = 0;
+volatile long curr_velocity = 0;
+volatile long ref_pos = 0;
+volatile long step_size = 16; // 90 degrees in ticks
 
 volatile int LOGGING = 0;
 
@@ -19,7 +22,50 @@ void init_timers() {
         int length;
         char tempBuffer[128];
 
-        // -------------------------  TIMER2 setup --------------------------------------//
+        // -------------------------  TIMER0 setup for PID --------------------------------------//
+        // Software Clock Using Timer/Counter 0.
+        // THE ISR for this is below.
+
+        // SET appropriate bits in TCCR for CTC mode. This is mode 2, thus WGM2 = 0, WGM0/1/0 = 2.
+        TCCR0A |= (1 << WGM01);
+        TCCR0B &= ~(1 << WGM02);
+
+        //TOP register is OCR0A, value is 78
+        //OCR0A = 78;
+        long prescalar = 256;
+        double frequency = 1000.00;
+        OCR0A = get_timer_top_value(f_IO, prescalar, frequency);
+
+        // Using pre-scaler 256, using CS0(2:0) = 4
+        TCCR0B |= (1 << CS02);
+        TCCR0B &= ~(1 << CS01);
+        TCCR0B &= ~(1 << CS00);
+
+        //Enable output compare match interrupt on timer 0
+        TIMSK0 |= ( 1 << OCIE0A );
+
+        //--------------------------- TIMER3 setup for interpolater ----------------------------------//
+        // SET appropriate bits in TCCR ...
+        // Using CTC mode with OCR3A for TOP. This is mode 4, thus WGM1/3210 = 0100.
+        TCCR3A &= ~(1 << WGM30);
+        TCCR3A &= ~(1 << WGM31);
+        TCCR3B |= (1 << WGM32);
+        TCCR3B &= ~(1 << WGM33);
+
+        // Using pre-scaler 256, using CS0(2:0) = 4
+        TCCR3B |= (1 << CS32);
+        TCCR3B &= ~(1 << CS31);
+        TCCR3B &= ~(1 << CS30);
+
+        // Interrupt Frequency: 500 = f_IO / (prescaler*OCR3A)
+        prescalar = 256;
+        frequency = 500.00;
+        OCR3A = get_timer_top_value(f_IO, prescalar, frequency);
+
+        //Enable output compare match interrupt on timer 3A
+        TIMSK3 |= ( 1 << OCIE3A );
+
+        // -------------------------  TIMER2 setup for motor --------------------------------------//
         // Software Clock Using Timer/Counter 2.
         // THE ISR for this is below.
 
@@ -42,8 +88,8 @@ void init_timers() {
         TCCR2B &= ~(1 << CS20);
 
         //TOP register is OCR2A, value is 78
-        long prescalar = 256;
-        long frequency = period;
+        prescalar = 256;
+        frequency = 781; //timer2 period to get us to TOP of 100
         OCR2A = get_timer_top_value(f_IO, prescalar, frequency);
 
         //clear OCR2B
@@ -54,6 +100,9 @@ void init_timers() {
 
         //Enable output compare match interrupt on timer 2
         TIMSK2 |= ( 1 << OCIE2A );
+
+        //TEST
+        set_motor2_speed(10);
 
 }
 
@@ -67,32 +116,54 @@ void toggle_logging() {
     LOGGING = ~LOGGING;
 }
 
-long get_current_velocity() {
-    return current_velocity;
-}
-
-//Interrupt for COMPA on TIMER2
-//TODO: THIS IS ONLY FOR TESTING. Separate ISR for PID (1KHz) and Interpolater (500Hz for example)
-ISR(TIMER2_COMPA_vect) {
-
-        // This is the Interrupt Service Routine for Timer2
-        // Each time the TCNT count is equal to the OCR2 register, this interrupt is "fired".
+//TIMER0 Interrupt for PID at 1KHz
+//PID equation is T = Kp(Pr - Pm) - Kd*Vm
+ISR(TIMER0_COMPA_vect) {
 
         int length;
         char tempBuffer[64];
 
         //calculate current position
         long position = current_position();
-     
+
         //calculate current speed
-        if (T_ms_ticks % G_velocity_period == 0) {
-            current_velocity = calculate_velocity(position);
+        if (PID_ticks % G_velocity_period == 0) {
+            curr_velocity = calculate_velocity(position);
         }
- 
-        length = sprintf( tempBuffer, "Timer2 position: %li velocity: %li.\r\n",position,current_velocity);
+
+        length = sprintf( tempBuffer, "Motor position: %li velocity: %li.\r\n",position,curr_velocity);
         //print_usb( tempBuffer, length );
 
         // Increment ticks
-        T_ms_ticks++;
+        length = sprintf( tempBuffer, "PID_ticks:%li\r\n", PID_ticks);
+        //print_usb( tempBuffer, length );
+        PID_ticks++;
+}
 
+//TIMER3 Interrupt for Interpolater at 500Hz
+//PID equation is T = Kp(Pr - Pm) - Kd*Vm
+ISR(TIMER3_COMPA_vect) {
+
+        int length;
+        char tempBuffer[64];
+
+        //calculate the reference position Pr to feed into PID equation
+        long curr_pos = current_position(); //absolute
+        long distance_travelled = curr_pos - start_position();
+        long destination = angleToSteps(desired_position());
+        long distance_remaining = destination - distance_travelled;
+
+        //update ref_pos if we are outside of step_size window
+        if (distance_remaining >= step_size) {
+            ref_pos = distance_travelled + step_size; 
+        }
+ 
+        // Increment ticks
+        length = sprintf( tempBuffer, "INT_ticks:%li\r\n", INT_ticks);
+        //print_usb( tempBuffer, length );
+        INT_ticks++;
+}
+
+//TIMER2 Interrupt for motor
+ISR(TIMER2_COMPA_vect) {
 }
