@@ -14,11 +14,15 @@
 
 // local "global" data structures
 unsigned char receive_buffer_position;
-char receive_buffer[32];
-char send_buffer[32];
-char menuBuffer[32];
+char receive_buffer[128];
+char send_buffer[128];
+char menuBuffer[128];
 int received = 0;
 char enter = 0x0D;
+
+// Used to pass to USB_COMM for serial communication
+int length;
+char menu_tempBuffer[64];
 
 // A generic function for whenever you want to print to your serial comm window.
 // Provide a string and the length of that string. My serial comm likes "\r\n" at 
@@ -50,10 +54,6 @@ void init_menu() {
 // The menu command is buffered in check_for_new_bytes_received (which calls this function).
 void process_received_string(const char* buffer)
 {
-	// Used to pass to USB_COMM for serial communication
-	int length;
-	char tempBuffer[32];
-	
 	// parse and echo back to serial comm window (and optionally the LCD)
 	char op_char;
 	int value;
@@ -63,11 +63,11 @@ void process_received_string(const char* buffer)
 	lcd_goto_xy(0,0);
 	printf("Got %c %d\n", op_char, value);
 #endif
-	length = sprintf( tempBuffer, "Op:%c V:%d\r\n", op_char, value );
-	print_usb( tempBuffer, length );
+	length = sprintf( menu_tempBuffer, "Op:%c V:%d\r\n", op_char, value );
+	print_usb( menu_tempBuffer, length );
 	
 	// Check valid command and implement
-        int kd,kp;
+        long kd,kp,pr,pm,vm,t;
 	switch (op_char) {
                 // set desired speed for testing (this is T)
                 case 'S':
@@ -88,26 +88,30 @@ void process_received_string(const char* buffer)
 		// print values of Kd, Kp, Vm, Pr, Pm, and T 
 		case 'V':
 		case 'v':
-                        kd = get_kd();
-                        kp = get_kp();
-                        int pr = desired_position();
-                        int pm = current_position();
-                        long vm = current_velocity();
-                        int t = get_motor2_speed();
-			length = sprintf( tempBuffer, "Current parameters: %d %d %li %d %d %d\r\n", kd,kp,vm,pr,pm,t );
-			print_usb( tempBuffer, length ); 
+                        kd = (long)get_kd();
+                        kp = (long)get_kp();
+                        pr = desired_position();
+                        pm = current_position();
+                        vm = current_velocity();
+                        t = get_motor2_speed();
+			length = sprintf( menu_tempBuffer, "Current parameters: kd=%li kp=%li vm=%li pr=%li pm=%li t=%li\r\n", kd,kp,vm,pr,pm,t );
+			print_usb( menu_tempBuffer, length ); 
 			break;
                 //increase kp
                 case 'P':
+                        set_kp(value);
                         break;
                 //decrease kp
                 case 'p':
+                        set_kp(-value);
                         break;
                 //increase kd
                 case 'D':
+                        set_kd(value);
                         break;
                 //decrease kd
                 case 'd':
+                        set_kd(-value);
                         break;
 		default:
 			print_usb( "Command does not compute.\r\n", 27 );

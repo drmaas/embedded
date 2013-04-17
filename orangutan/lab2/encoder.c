@@ -13,7 +13,14 @@ volatile long start_pos = 0;
 volatile long desired_pos = 0;
 volatile long velocity = 0;
 
+volatile long WHEEL_TICKS = 64;
+volatile long CIRCLE = 360;
+volatile long CIRCUMFERENCE = 8; //about 8 inches
+
 extern int G_velocity_period;
+
+int length;
+char encoder_tempBuffer[64];
 
 //initialize encoder
 void init_encoder() {
@@ -62,13 +69,17 @@ unsigned char get_m2b_value() {
 //get current motor position in ticks
 long current_position() {
     cli(); 
-    return global_counts_m2;
+    long counts = global_counts_m2;
     sei();
+    return counts;
 }
 
 //convert angle to steps
 long angleToSteps(long angle) {
-    return angle*(WHEEL_TICKS/CIRCLE);
+    long steps = (angle*WHEEL_TICKS)/CIRCLE;
+    length = sprintf( encoder_tempBuffer, "Angle: %li TICKS:%li C:%li steps:%li\r\n",angle,WHEEL_TICKS,CIRCLE,steps);
+    //print_usb( encoder_tempBuffer, length );
+    return steps; 
 }
 
 //convert to degrees by using 5.625 degrees/tick (360/64)
@@ -97,14 +108,11 @@ long current_velocity() {
 //encoder interrupt
 ISR(PCINT0_vect) {
 
-        int length;
-        char tempBuffer[64];
-
         unsigned char m2a_val = get_m2a_value();
         unsigned char m2b_val = get_m2b_value();
 
-        length = sprintf( tempBuffer, "Encoder test: %li,%li\r\n",global_counts_m2,global_error_m2);
-        //print_usb( tempBuffer, length );
+        length = sprintf( encoder_tempBuffer, "Encoder test: %li,%li\r\n",global_counts_m2,global_error_m2);
+        //print_usb( encoder_tempBuffer, length );
 
         char plus_m2 = m2a_val ^ global_last_m2b_val;
         char minus_m2 = m2b_val ^ global_last_m2a_val;

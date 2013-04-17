@@ -2,6 +2,7 @@
 #include "digital.h"
 #include "interpolater.h"
 #include "encoder.h"
+#include "motor.h"
 
 #include <avr/interrupt.h>
 
@@ -13,14 +14,13 @@ extern int G_velocity_period;
 
 volatile long curr_velocity = 0;
 volatile long ref_pos = 0;
-volatile long step_size = 16; // 90 degrees in ticks
 
 volatile int LOGGING = 0;
 
-void init_timers() {
+int length;
+char timer_tempBuffer[64];
 
-        int length;
-        char tempBuffer[128];
+void init_timers() {
 
         // -------------------------  TIMER0 setup for PID --------------------------------------//
         // Software Clock Using Timer/Counter 0.
@@ -87,23 +87,19 @@ void init_timers() {
         TCCR2B |= (1 << CS21);
         TCCR2B &= ~(1 << CS20);
 
-        //TOP register is OCR2A, value is 78
+        //TOP register is OCR2A, value is 100
         prescalar = 256;
         frequency = 781; //timer2 period to get us to TOP of 100
         OCR2A = get_timer_top_value(f_IO, prescalar, frequency);
 
         //clear OCR2B
-        OCR2B = 0;
+        set_motor2_speed(0);
 
         //set direction to forward and clear PWM2B
         init_digital();
 
         //Enable output compare match interrupt on timer 2
         TIMSK2 |= ( 1 << OCIE2A );
-
-        //TEST
-        set_motor2_speed(10);
-
 }
 
 //get value we should set top register to based on clock speed, prescalar, and desired frequency
@@ -120,23 +116,27 @@ void toggle_logging() {
 //PID equation is T = Kp(Pr - Pm) - Kd*Vm
 ISR(TIMER0_COMPA_vect) {
 
-        int length;
-        char tempBuffer[64];
-
         //calculate current position
         long position = current_position();
 
         //calculate current speed
-        if (PID_ticks % G_velocity_period == 0) {
+        //if (PID_ticks % G_velocity_period == 0) {
             curr_velocity = calculate_velocity(position);
+        //}
+
+        //set torque
+        long torque = calculate_torque(get_kp(), get_kd(), ref_pos, position, curr_velocity);
+        set_motor2_speed(torque);
+
+        //log
+        if (LOGGING && torque) {
+            length = sprintf( timer_tempBuffer, "Motor position: %li velocity: %li.\r\n",position,curr_velocity);
+            print_usb( timer_tempBuffer, length );
         }
 
-        length = sprintf( tempBuffer, "Motor position: %li velocity: %li.\r\n",position,curr_velocity);
-        //print_usb( tempBuffer, length );
-
         // Increment ticks
-        length = sprintf( tempBuffer, "PID_ticks:%li\r\n", PID_ticks);
-        //print_usb( tempBuffer, length );
+        //length = sprintf( timer_tempBuffer, "PID_ticks:%li\r\n", PID_ticks);
+        //print_usb( timer_tempBuffer, length );
         PID_ticks++;
 }
 
@@ -144,23 +144,16 @@ ISR(TIMER0_COMPA_vect) {
 //PID equation is T = Kp(Pr - Pm) - Kd*Vm
 ISR(TIMER3_COMPA_vect) {
 
-        int length;
-        char tempBuffer[64];
-
         //calculate the reference position Pr to feed into PID equation
-        long curr_pos = current_position(); //absolute
-        long distance_travelled = curr_pos - start_position();
-        long destination = angleToSteps(desired_position());
-        long distance_remaining = destination - distance_travelled;
+        long position = current_position();
+        ref_pos = interpolate(position);
 
-        //update ref_pos if we are outside of step_size window
-        if (distance_remaining >= step_size) {
-            ref_pos = distance_travelled + step_size; 
-        }
+        //length = sprintf( timer_tempBuffer, "Current:%li Reference: %li\r\n",position, ref_pos);
+        //print_usb( timer_tempBuffer, length );
  
         // Increment ticks
-        length = sprintf( tempBuffer, "INT_ticks:%li\r\n", INT_ticks);
-        //print_usb( tempBuffer, length );
+        //length = sprintf( timer_tempBuffer, "INT_ticks:%li\r\n", INT_ticks);
+        //print_usb( timer_tempBuffer, length );
         INT_ticks++;
 }
 

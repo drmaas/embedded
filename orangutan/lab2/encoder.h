@@ -9,14 +9,12 @@
 
 #include <string.h>
 
-#define WHEEL_TICKS 64
-#define CIRCLE 360
-#define CIRCUMFERENCE 8 //about 8 inches
-
 void init_encoder();
 long current_position();
+long angleToSteps(long angle);
+long current_degrees(long position);
 long calculate_velocity(long position);
-long currenyt_velocity();
+long current_velocity();
 unsigned char get_m2a_value();
 unsigned char get_m2b_value();
 

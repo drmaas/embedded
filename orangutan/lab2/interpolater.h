@@ -12,11 +12,11 @@ long desired_position();
 void set_desired_position(long position);
 long start_position();
 void set_start_position(long position);
-void set_kp(int kp);
-int get_kp();
-void set_kd(int kd);
-int get_kd();
+void set_kp(double kp);
+double get_kp();
+void set_kd(double kd);
+double get_kd();
 
-int interpolate(int vm,int pm);
+long interpolate(long curr_pos);
 
 #endif

@@ -1,10 +1,19 @@
 #include "interpolater.h"
+#include "encoder.h"
 
 volatile int position_degrees = 0;
-volatile int KP = 0;
-volatile int KD = 0;
+
+//initial KP: 50 = KP*16 = 3.125
+volatile double KP = 3.125;
+//initial KD: 100=3.125*16 - KD*(Vmax=810)
+volatile double KD = -0.0617;
 volatile long user_start_pos = 0;
 volatile long user_desired_pos = 0;
+
+volatile long step_size = 16; // 90 degrees in ticks
+
+int length;
+char int_tempBuffer[64];
 
 //get desired user position
 long desired_position() {
@@ -27,27 +36,45 @@ void set_start_position(long position) {
 }
 
 //set kp
-void set_kp(int kp) {
-    KP = kp;
+void set_kp(double kp) {
+    KP += kp;
 }
 
 //get kp
-int get_kp() {
+double get_kp() {
     return KP;
 }
 
 //set kd
-void set_kd(int kd) {
-    KD = kd;
+void set_kd(double kd) {
+    KD += kd;
 }
 
 //get kd
-int get_kd() {
+double get_kd() {
     return KD;
 }
 
-//get torque(motor value) via equation T = Kp(Pr-Pm)-Kd*Vm
-int interpolate(int vm, int pm) {
+//get reference position to feed to equation T = Kp(Pr-Pm)-Kd*Vm
+long interpolate(long curr_pos) {
+    //calculate the reference position Pr to feed into PID equation
+    long start_pos = start_position();
+    long distance_travelled = curr_pos - start_pos;
+    long d = desired_position();
+    long destination = angleToSteps(d);
+    long distance_remaining = destination - distance_travelled;
 
-    return 0;
+    //update ref_position if we are outside of step_size window
+    long ref_position;
+    if (distance_remaining >= step_size) {
+        ref_position = distance_travelled + step_size;
+    }
+    else {
+        ref_position = distance_remaining;
+    }
+
+    length = sprintf( int_tempBuffer, "Des:%li Curr:%li Start:%li Dest:%li Ref: %li\r\n",d,curr_pos, start_pos, destination, ref_position);
+    //print_usb( int_tempBuffer, length );
+
+    return ref_position;
 }

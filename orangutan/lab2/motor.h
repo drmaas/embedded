@@ -8,7 +8,8 @@
 
 #include <string.h>
 
-void set_motor2_speed(int speed);
-int get_motor2_speed();
+void set_motor2_speed(long speed);
+long get_motor2_speed();
+long calculate_torque(double kp, double kd, long pr, long pm, long vm);
 
 #endif
