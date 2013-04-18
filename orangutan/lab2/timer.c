@@ -14,6 +14,7 @@ extern int G_velocity_period;
 
 volatile long curr_velocity = 0;
 volatile long ref_pos = 0;
+volatile int motor_mode = 0;
 
 int timer_length;
 char timer_tempBuffer[64];
@@ -105,18 +106,23 @@ long get_timer_top_value(long clock, long prescalar, long frequency) {
     return clock/(prescalar*frequency);
 }
 
+//toggle between ref mode and constant mode
+void set_mode(int mode) {
+  motor_mode = mode;
+}
+
 //TIMER0 Interrupt for PID at 1KHz
 //PID equation is T = Kp(Pr - Pm) - Kd*Vm
 ISR(TIMER0_COMPA_vect) {
-
+    if (motor_mode == 0) {
         //calculate current position
         long position = current_position();
 
         //calculate current speed 2x per second
-        if (PID_ticks % G_velocity_period == 0) {
-            double rate_sec = 1000.00/G_velocity_period; //sample rate
+        //if (PID_ticks % G_velocity_period == 0) {
+            double rate_sec = 1000.00; // /G_velocity_period; //sample rate
             curr_velocity = calculate_velocity(position,rate_sec);
-        }
+        //}
 
         //set torque
         long torque = calculate_torque(get_kp(), get_kd(), ref_pos, position, curr_velocity);
@@ -127,11 +133,11 @@ ISR(TIMER0_COMPA_vect) {
             //timer_length = sprintf( timer_tempBuffer, "Torque:%li\r\n",torque);
             //print_usb( timer_tempBuffer, timer_length );
         }
-
-        // Increment ticks
-        //timer_length = sprintf( timer_tempBuffer, "PID_ticks:%li\r\n", PID_ticks);
-        //print_usb( timer_tempBuffer, timer_length );
-        PID_ticks++;
+    }
+    // Increment ticks
+    //timer_length = sprintf( timer_tempBuffer, "PID_ticks:%li\r\n", PID_ticks);
+    //print_usb( timer_tempBuffer, timer_length );
+    PID_ticks++;
 }
 
 //TIMER3 Interrupt for Interpolater at 500Hz

@@ -74,11 +74,13 @@ void process_received_string(const char* buffer)
                 // set desired speed for testing (this is T)
                 case 'S':
                 case 's':
+                        set_mode(1); //constant mode
                         set_motor2_speed(value);
                         break;
 		// set desired positon (degrees from current)
 		case 'R':
 		case 'r':
+                        set_mode(0); //ref mode
                         reset_counts(); //reset encoder count
                         set_desired_position(value);
                         //set_start_position(current_position());
@@ -98,7 +100,7 @@ void process_received_string(const char* buffer)
                         pm = current_position();
                         vm = current_velocity();
                         t = get_motor2_speed();
-			length = sprintf( menu_tempBuffer, "Current parameters: kd=%li kp=%li vm=%li pu=%li pr=%li pm=%li t=%li\r\n", kd,kp,vm,pu,pr,pm,t );
+			length = sprintf( menu_tempBuffer, "Current parameters: kp=%li kd=%li vm=%li pu=%li pr=%li pm=%li t=%li\r\n", kp,kd,vm,pu,pr,pm,t );
 			print_usb( menu_tempBuffer, length ); 
 			break;
                 //increase kp
