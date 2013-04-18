@@ -24,6 +24,8 @@ char enter = 0x0D;
 int length;
 char menu_tempBuffer[64];
 
+extern int LOGGING;
+
 // A generic function for whenever you want to print to your serial comm window.
 // Provide a string and the length of that string. My serial comm likes "\r\n" at 
 // the end of each string (be sure to include in length) for proper linefeed.
@@ -67,7 +69,7 @@ void process_received_string(const char* buffer)
 	print_usb( menu_tempBuffer, length );
 	
 	// Check valid command and implement
-        long kd,kp,pr,pm,vm,t;
+        long kd,kp,pu,pr,pm,vm,t;
 	switch (op_char) {
                 // set desired speed for testing (this is T)
                 case 'S':
@@ -77,24 +79,26 @@ void process_received_string(const char* buffer)
 		// set desired positon (degrees from current)
 		case 'R':
 		case 'r':
+                        reset_counts(); //reset encoder count
                         set_desired_position(value);
                         set_start_position(current_position());
 			break; 
                 // start logging pr, pm, T
                 case 'L':
                 case 'l':
-                        toggle_logging();
+                        LOGGING = ~LOGGING;
                         break;
 		// print values of Kd, Kp, Vm, Pr, Pm, and T 
 		case 'V':
 		case 'v':
                         kd = (long)get_kd();
                         kp = (long)get_kp();
-                        pr = desired_position();
+                        pu = desired_position();
+                        pr = get_ref_position();
                         pm = current_position();
                         vm = current_velocity();
                         t = get_motor2_speed();
-			length = sprintf( menu_tempBuffer, "Current parameters: kd=%li kp=%li vm=%li pr=%li pm=%li t=%li\r\n", kd,kp,vm,pr,pm,t );
+			length = sprintf( menu_tempBuffer, "Current parameters: kd=%li kp=%li vm=%li pu=%li pr=%li pm=%li t=%li\r\n", kd,kp,vm,pu,pr,pm,t );
 			print_usb( menu_tempBuffer, length ); 
 			break;
                 //increase kp

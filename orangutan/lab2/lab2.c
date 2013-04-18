@@ -5,6 +5,7 @@
 
 #include "timer.h"
 #include "encoder.h"
+#include "interpolater.h"
 #include "menu.h"
 
 #include <inttypes.h> //gives us uintX_t
@@ -20,6 +21,10 @@ volatile uint32_t PID_ticks = 0;
 volatile uint32_t INT_ticks = 0;
 volatile uint32_t MAIN_ticks = 0;
 volatile int G_velocity_period = 500;
+volatile int LOGGING;
+
+int main_length;
+char main_tempBuffer[64];
 
 int main(void) {
 
@@ -39,6 +44,12 @@ int main(void) {
         //poll	
 	while (1) {
                 MAIN_ticks++;
+
+                //log
+                if (LOGGING && (MAIN_ticks % 1000) == 0) {
+                    main_length = sprintf( main_tempBuffer, "Motor position:%li Velocity:%li Ref position:%li\r\n",current_position(),current_velocity(),get_ref_position());
+                    print_usb( main_tempBuffer, main_length );
+                }
 
                 serial_check();
                 check_for_new_bytes_received();

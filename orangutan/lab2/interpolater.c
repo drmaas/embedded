@@ -5,14 +5,16 @@ volatile int position_degrees = 0;
 
 //initial KP: 50 = KP*16 = 3.125
 volatile double KP = 3.125;
-//initial KD: 100=3.125*16 - KD*(Vmax=810)
-volatile double KD = -0.0617;
+//initial KD: 100=3.125*16 - KD*(Vmax=103)
+volatile double KD = -0.4854;
 volatile long user_start_pos = 0;
 volatile long user_desired_pos = 0;
 
 volatile long step_size = 16; // 90 degrees in ticks
 
-int length;
+volatile long ref_position;
+
+int int_length;
 char int_tempBuffer[64];
 
 //get desired user position
@@ -65,16 +67,19 @@ long interpolate(long curr_pos) {
     long distance_remaining = destination - distance_travelled;
 
     //update ref_position if we are outside of step_size window
-    long ref_position;
     if (distance_remaining >= step_size) {
         ref_position = distance_travelled + step_size;
     }
     else {
-        ref_position = distance_remaining;
+        ref_position = destination; 
     }
 
-    length = sprintf( int_tempBuffer, "Des:%li Curr:%li Start:%li Dest:%li Ref: %li\r\n",d,curr_pos, start_pos, destination, ref_position);
-    //print_usb( int_tempBuffer, length );
+    int_length = sprintf( int_tempBuffer, "Des:%li Curr:%li Start:%li Dest:%li Ref: %li\r\n",d,curr_pos, start_pos, destination, ref_position);
+    //print_usb( int_tempBuffer, int_length );
 
+    return ref_position;
+}
+
+long get_ref_position() {
     return ref_position;
 }

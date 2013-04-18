@@ -16,7 +16,7 @@ void set_kp(double kp);
 double get_kp();
 void set_kd(double kd);
 double get_kd();
-
+long get_ref_position();
 long interpolate(long curr_pos);
 
 #endif
