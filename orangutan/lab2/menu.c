@@ -81,7 +81,7 @@ void process_received_string(const char* buffer)
 		case 'r':
                         reset_counts(); //reset encoder count
                         set_desired_position(value);
-                        set_start_position(current_position());
+                        //set_start_position(current_position());
 			break; 
                 // start logging pr, pm, T
                 case 'L':

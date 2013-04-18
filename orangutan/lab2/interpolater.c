@@ -60,8 +60,8 @@ double get_kd() {
 //get reference position to feed to equation T = Kp(Pr-Pm)-Kd*Vm
 long interpolate(long curr_pos) {
     //calculate the reference position Pr to feed into PID equation
-    long start_pos = start_position();
-    long distance_travelled = curr_pos - start_pos;
+    //long start_pos = start_position();
+    long distance_travelled = curr_pos; // - start_pos;
     long d = desired_position();
     long destination = angleToSteps(d);
     long distance_remaining = destination - distance_travelled;
@@ -74,7 +74,7 @@ long interpolate(long curr_pos) {
         ref_position = destination; 
     }
 
-    int_length = sprintf( int_tempBuffer, "Des:%li Curr:%li Start:%li Dest:%li Ref: %li\r\n",d,curr_pos, start_pos, destination, ref_position);
+    int_length = sprintf( int_tempBuffer, "Des:%li Curr:%li Dest:%li Ref: %li\r\n",d,curr_pos, destination, ref_position);
     //print_usb( int_tempBuffer, int_length );
 
     return ref_position;
