@@ -1,0 +1,4 @@
+NOTES
+
+1. Must jack up KP so that when motor is close to final dest, torque gets set high enough - anything below 15 (on 0-100 scale) does not register for motor
+2. 

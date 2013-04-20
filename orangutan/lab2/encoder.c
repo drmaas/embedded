@@ -8,6 +8,7 @@ volatile unsigned char global_last_m2a_val;
 volatile unsigned char global_last_m2b_val;
 volatile long prev_position = 0;
 volatile long prev_velocity = 0;
+volatile long prev_time = 0;
 volatile long start_pos = 0;
 volatile long desired_pos = 0;
 volatile long velocity = 0;
@@ -81,8 +82,6 @@ long reset_counts() {
 //convert angle to steps
 long angleToSteps(long angle) {
     long steps = (angle*WHEEL_TICKS)/CIRCLE;
-    length = sprintf( encoder_tempBuffer, "Angle: %li TICKS:%li C:%li steps:%li\r\n",angle,WHEEL_TICKS,CIRCLE,steps);
-    //print_usb( encoder_tempBuffer, length );
     return steps; 
 }
 
@@ -91,17 +90,15 @@ long current_degrees(long position) {
     return (position*(CIRCLE/WHEEL_TICKS))%360;
 }
 
-//get current velocity in rotations/min
-long calculate_velocity(long position, double rate_sec) {
-    //if (position == prev_position) {
-    //    velocity = prev_velocity;
-    //}
-    //else {
-        //velocity = (((position - prev_position)*(1000.00/G_velocity_period)*60)/WHEEL_TICKS)*CIRCUMFERENCE;
-        velocity = (((position - prev_position)*rate_sec*60)/WHEEL_TICKS);
-    //    prev_velocity = velocity;
-    //}
+//get current velocity in rotations/(5 sec)
+//vmax in rpm is 123
+//vmax 5 sec is 10
+long calculate_velocity_ticks(long position) {
+    long curr_time = get_ticks();
+    long time = ticks_to_microseconds(curr_time - prev_time);
+    velocity = (((((position - prev_position)*1000000)/time)*5)/WHEEL_TICKS);
     prev_position = position;
+    prev_time = curr_time;
     return velocity;
 }
 
@@ -112,11 +109,10 @@ long current_velocity() {
 
 //encoder interrupt
 ISR(PCINT0_vect) {
-
         unsigned char m2a_val = get_m2a_value();
         unsigned char m2b_val = get_m2b_value();
 
-        length = sprintf( encoder_tempBuffer, "Encoder test: %li,%li\r\n",global_counts_m2,global_error_m2);
+        //length = sprintf( encoder_tempBuffer, "Encoder test: %li,%li\r\n",global_counts_m2,global_error_m2);
         //print_usb( encoder_tempBuffer, length );
 
         char plus_m2 = m2a_val ^ global_last_m2b_val;
@@ -132,5 +128,4 @@ ISR(PCINT0_vect) {
 
         global_last_m2a_val = m2a_val;
         global_last_m2b_val = m2b_val;
-
 }

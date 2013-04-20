@@ -71,14 +71,14 @@ void init_timers() {
         // Software Clock Interrupt Frequency: 1000 = f_IO / (prescaler*OCR2A)
         //f_IO is 20MHz
 
-        // SET appropriate bits in TCCR2A for fast PWM mode. This is mode 7.
+        // SET appropriate bits in TCCR2A for fast PWM mode. This is mode 7 for fast pwm.
         TCCR2A |= (1 << WGM21);
         TCCR2A |= (1 << WGM20);
 
-        // clear 0C2A on compare match
+        // clear 0C2B on compare match
         TCCR2A |= (1 << COM2B1);
 
-        // SET appropriate bits in TCCR2B for fast PWM mode. This is mode 7.
+        // SET appropriate bits in TCCR2B for fast PWM mode. This is mode 7 for past pwm.
         TCCR2B |= (1 << WGM22);
 
         // Using pre-scaler 256, using CS2(2:0) = 6
@@ -97,8 +97,8 @@ void init_timers() {
         //set direction to forward and clear PWM2B
         init_digital();
 
-        //Enable output compare match interrupt on timer 2
-        //TIMSK2 |= ( 1 << OCIE2A );
+        //enable output compare match interrupt on timer 2
+        TIMSK2 |= ( 1 << OCIE2A );
 }
 
 //get value we should set top register to based on clock speed, prescalar, and desired frequency
@@ -114,26 +114,19 @@ void set_mode(int mode) {
 //TIMER0 Interrupt for PID at 1KHz
 //PID equation is T = Kp(Pr - Pm) - Kd*Vm
 ISR(TIMER0_COMPA_vect) {
-    if (motor_mode == 0) {
-        //calculate current position
-        long position = current_position();
-
-        //calculate current speed 2x per second
-        //if (PID_ticks % G_velocity_period == 0) {
-            double rate_sec = 1000.00; // /G_velocity_period; //sample rate
-            curr_velocity = calculate_velocity(position,rate_sec);
-        //}
+    //calculate current position
+    long position = current_position();
+    if (motor_mode == 1) {
+        //calculate current speed 20x per second
+        if (PID_ticks % G_velocity_period == 0) {
+            curr_velocity = calculate_velocity_ticks(position); //calculate_velocity(position,rate_sec);
+        }
 
         //set torque
         long torque = calculate_torque(get_kp(), get_kd(), ref_pos, position, curr_velocity);
         set_motor2_speed(torque);
-
-        //log
-        if (torque) {
-            //timer_length = sprintf( timer_tempBuffer, "Torque:%li\r\n",torque);
-            //print_usb( timer_tempBuffer, timer_length );
-        }
     }
+
     // Increment ticks
     //timer_length = sprintf( timer_tempBuffer, "PID_ticks:%li\r\n", PID_ticks);
     //print_usb( timer_tempBuffer, timer_length );
@@ -158,5 +151,6 @@ ISR(TIMER3_COMPA_vect) {
 }
 
 //TIMER2 Interrupt for motor
-//ISR(TIMER2_COMPA_vect) {
-//}
+ISR(TIMER2_COMPA_vect) {
+}
+

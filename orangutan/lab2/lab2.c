@@ -20,8 +20,8 @@ volatile uint32_t f_IO = 20000000;
 volatile uint32_t PID_ticks = 0;
 volatile uint32_t INT_ticks = 0;
 volatile uint32_t MAIN_ticks = 0;
-volatile int G_velocity_period = 500;
-volatile int LOGGING;
+volatile int G_velocity_period = 50;
+volatile int LOGGING = 0;
 
 int main_length;
 char main_tempBuffer[64];
@@ -47,7 +47,9 @@ int main(void) {
 
                 //log
                 if (LOGGING && (MAIN_ticks % 1000) == 0) {
-                    main_length = sprintf( main_tempBuffer, "Motor position:%li Velocity:%li Ref position:%li\r\n",current_position(),current_velocity(),get_ref_position());
+                    long p = current_position();
+                    long v = calculate_velocity_ticks(p);
+                    main_length = sprintf( main_tempBuffer, "Motor position:%li Velocity:%li\r\n",p,v);
                     print_usb( main_tempBuffer, main_length );
                 }
 

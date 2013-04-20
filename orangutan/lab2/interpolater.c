@@ -4,9 +4,9 @@
 volatile int position_degrees = 0;
 
 //initial KP: 50 = KP*16 = 3.125
-volatile double KP = 3.125;
-//initial KD: full speed: 100=3.125*64 - KD*(Vmax=103 rpm)
-volatile double KD = 0.9;
+//final KP: 16
+volatile double KP = 16.0;
+volatile double KD = 4.0;
 volatile long user_start_pos = 0;
 volatile long user_desired_pos = 0;
 
@@ -74,7 +74,7 @@ long interpolate(long curr_pos) {
         ref_position = destination; 
     }
 
-    int_length = sprintf( int_tempBuffer, "Des:%li Curr:%li Dest:%li Ref: %li\r\n",d,curr_pos, destination, ref_position);
+    //int_length = sprintf( int_tempBuffer, "Des:%li Curr:%li Dest:%li Ref: %li\r\n",d,curr_pos, destination, ref_position);
     //print_usb( int_tempBuffer, int_length );
 
     return ref_position;

@@ -70,20 +70,22 @@ void process_received_string(const char* buffer)
 	
 	// Check valid command and implement
         long kd,kp,pu,pr,pm,vm,t;
+        int mode = 0;
 	switch (op_char) {
                 // set desired speed for testing (this is T)
                 case 'S':
                 case 's':
-                        set_mode(1); //constant mode
+                        mode = 0; 
+                        set_mode(mode); //constant mode
                         set_motor2_speed(value);
                         break;
 		// set desired positon (degrees from current)
 		case 'R':
 		case 'r':
-                        set_mode(0); //ref mode
+                        mode = 1;
+                        set_mode(mode); //ref mode
                         reset_counts(); //reset encoder count
                         set_desired_position(value);
-                        //set_start_position(current_position());
 			break; 
                 // start logging pr, pm, T
                 case 'L':
@@ -98,7 +100,7 @@ void process_received_string(const char* buffer)
                         pu = desired_position();
                         pr = get_ref_position();
                         pm = current_position();
-                        vm = current_velocity();
+                        vm = calculate_velocity_ticks(pm);
                         t = get_motor2_speed();
 			length = sprintf( menu_tempBuffer, "Current parameters: kp=%li kd=%li vm=%li pu=%li pr=%li pm=%li t=%li\r\n", kp,kd,vm,pu,pr,pm,t );
 			print_usb( menu_tempBuffer, length ); 

@@ -7,8 +7,6 @@
 // GLOBALS
 extern uint32_t f_IO;
 
-char tempBuffer[64];
-
 //setup values used by motor
 void init_digital() {
 
