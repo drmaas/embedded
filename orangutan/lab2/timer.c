@@ -100,6 +100,36 @@ void init_timers() {
         //enable output compare match interrupt on timer 2
         TIMSK2 |= ( 1 << OCIE2A );
         TIMSK2 |= ( 1 << OCIE2B );
+
+        // ----------------------------- TIMER1 setup for velocity calculation ---------------------//
+        // Using CTC mode with OCR1A for TOP. This is mode 4, thus WGM3/3210 = 0100.
+        TCCR1A &= ~(1 << WGM10);
+        TCCR1A &= ~(1 << WGM11);
+        TCCR1B |= (1 << WGM12);
+        TCCR1B &= ~(1 << WGM13);
+
+        // Toggle OC1A on a compare match. Thus COM1A_10 = 01
+        TCCR1A &= ~(1 << COM1A1);
+        TCCR1A |= (1 << COM1A0);
+
+        // Using pre-scaler 1024. This is CS1/2/1/0 = 101
+        TCCR1B |= (1 << CS12);
+        TCCR1B &= ~(1 << CS11);
+        TCCR1B |= (1 << CS10);
+
+        // Interrupt Frequency: Hz? = f_IO / (1024*OCR1A)
+        // Set OCR1A appropriately for TOP to generate desired frequency.
+        // NOTE: This IS the toggle frequency.
+        prescalar = 1024;
+        frequency = 20.00;
+        OCR1A = get_timer_top_value(f_IO, prescalar, frequency);
+
+        // Regardless of its value (provided it is less than OCR1A), it will match at the frequency of timer 1.
+        OCR1B = 1;
+
+        //Enable output compare match interrupt on timer 1B
+        TIMSK1 |= (1 << OCIE1A);
+
 }
 
 //get value we should set top register to based on clock speed, prescalar, and desired frequency
@@ -119,9 +149,9 @@ ISR(TIMER0_COMPA_vect) {
     long position = current_position();
     if (motor_mode == 1) {
         //calculate current speed 20x per second
-        if (PID_ticks % G_velocity_period == 0) {
-            curr_velocity = calculate_velocity_ticks(position); //calculate_velocity(position,rate_sec);
-        }
+        //if (PID_ticks % G_velocity_period == 0) {
+        //    curr_velocity = calculate_velocity_ticks(position); //calculate_velocity(position,rate_sec);
+        //}
 
         //set torque
         long torque = calculate_torque(get_kp(), get_kd(), ref_pos, position, curr_velocity);
@@ -149,6 +179,12 @@ ISR(TIMER3_COMPA_vect) {
         //timer_length = sprintf( timer_tempBuffer, "INT_ticks:%li\r\n", INT_ticks);
         //print_usb( timer_tempBuffer, timer_length );
         INT_ticks++;
+}
+
+// INTERRUPT HANDLER for velocity calculation, 20x/sec
+ISR(TIMER1_COMPA_vect) {
+        long position = current_position();
+        curr_velocity = calculate_velocity(position); //calculate_velocity(position,rate_sec);
 }
 
 //TIMER2 Interrupt for motor

@@ -48,7 +48,7 @@ int main(void) {
                 //log
                 if (LOGGING && (MAIN_ticks % 1000) == 0) {
                     long p = current_position();
-                    long v = calculate_velocity_ticks(p);
+                    long v = get_velocity();
                     main_length = sprintf( main_tempBuffer, "Motor position:%li Velocity:%li\r\n",p,v);
                     print_usb( main_tempBuffer, main_length );
                 }

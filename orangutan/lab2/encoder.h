@@ -14,8 +14,8 @@ long current_position();
 long reset_counts();
 long angleToSteps(long angle);
 long current_degrees(long position);
-long calculate_velocity_ticks(long position);
-long current_velocity();
+long calculate_velocity(long position);
+long get_velocity();
 unsigned char get_m2a_value();
 unsigned char get_m2b_value();
 

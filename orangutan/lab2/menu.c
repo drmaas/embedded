@@ -25,6 +25,7 @@ int length;
 char menu_tempBuffer[64];
 
 extern int LOGGING;
+extern int motor_mode;
 
 // A generic function for whenever you want to print to your serial comm window.
 // Provide a string and the length of that string. My serial comm likes "\r\n" at 
@@ -77,6 +78,8 @@ void process_received_string(const char* buffer)
                 case 's':
                         mode = 0; 
                         set_mode(mode); //constant mode
+                        int i;
+                        //for (i = 0; i < 1000; i++) WAIT_1MS;
                         set_motor2_speed(value);
                         break;
 		// set desired positon (degrees from current)
@@ -100,9 +103,9 @@ void process_received_string(const char* buffer)
                         pu = desired_position();
                         pr = get_ref_position();
                         pm = current_position();
-                        vm = calculate_velocity_ticks(pm);
+                        vm = get_velocity();
                         t = get_motor2_speed();
-			length = sprintf( menu_tempBuffer, "Current parameters: kp=%li kd=%li vm=%li pu=%li pr=%li pm=%li t=%li\r\n", kp,kd,vm,pu,pr,pm,t );
+			length = sprintf( menu_tempBuffer, "Current parameters: kp=%li kd=%li vm=%li pu=%li pr=%li pm=%li t=%li mode=%d\r\n", kp,kd,vm,pu,pr,pm,t,motor_mode );
 			print_usb( menu_tempBuffer, length ); 
 			break;
                 //increase kp

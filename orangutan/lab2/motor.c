@@ -43,8 +43,9 @@ void set_motor2_speed(long speed) {
 }
 
 //calculate torque with PID equation T = Kp(Pr - Pm) - Kd*Vm
+//vm must be divided by 12 so that kd causes less oscillation around the endpoint
 long calculate_torque(double kp, double kd, long pr, long pm, long vm) {
-    long torque = (kp*(pr-pm) - kd*vm);
+    long torque = (kp*(pr-pm) - kd*(vm/12));
 
     //motor_length = sprintf( motor_tempBuffer, "pr:%li pm:%li vm:%li torque:%li\r\n",pr,pm,vm,torque);
     //print_usb( motor_tempBuffer, motor_length );
@@ -54,5 +55,6 @@ long calculate_torque(double kp, double kd, long pr, long pm, long vm) {
 
 //return speed (T) from OCR2B
 long get_motor2_speed() {
-    return OCR2B;
+    long speed = OCR2B;
+    return speed;
 }

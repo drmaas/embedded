@@ -90,20 +90,14 @@ long current_degrees(long position) {
     return (position*(CIRCLE/WHEEL_TICKS))%360;
 }
 
-//get current velocity in rotations/(5 sec)
-//vmax in rpm is 123
-//vmax 5 sec is 10
-long calculate_velocity_ticks(long position) {
-    long curr_time = get_ticks();
-    long time = ticks_to_microseconds(curr_time - prev_time);
-    velocity = (((((position - prev_position)*1000000)/time)*5)/WHEEL_TICKS);
+//calculat velocity based on rate, rpms
+long calculate_velocity(long position) {
+    velocity = (((position - prev_position)*20*60)/WHEEL_TICKS);
     prev_position = position;
-    prev_time = curr_time;
     return velocity;
 }
 
-//get current speed
-long current_velocity() {
+long get_velocity() {
     return velocity;
 }
 
