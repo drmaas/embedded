@@ -99,6 +99,7 @@ void init_timers() {
 
         //enable output compare match interrupt on timer 2
         TIMSK2 |= ( 1 << OCIE2A );
+        TIMSK2 |= ( 1 << OCIE2B );
 }
 
 //get value we should set top register to based on clock speed, prescalar, and desired frequency
@@ -154,3 +155,5 @@ ISR(TIMER3_COMPA_vect) {
 ISR(TIMER2_COMPA_vect) {
 }
 
+ISR(TIMER2_COMPB_vect) {
+}
