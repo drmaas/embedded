@@ -10,7 +10,6 @@ volatile long prev_position = 0;
 volatile long prev_velocity = 0;
 volatile long prev_time = 0;
 volatile long start_pos = 0;
-volatile long desired_pos = 0;
 volatile long velocity = 0;
 
 volatile long WHEEL_TICKS = 64;

@@ -5,7 +5,7 @@ volatile int position_degrees = 0;
 
 //initial KP: 50 = KP*16 = 3.125
 //final KP: 16
-volatile double KP = 16.0;
+volatile double KP = 12.0;
 volatile double KD = 4.0;
 volatile long user_start_pos = 0;
 volatile long user_desired_pos = 0;
@@ -13,6 +13,8 @@ volatile long user_desired_pos = 0;
 volatile long step_size = 16; // 90 degrees in ticks
 
 volatile long ref_position;
+
+volatile int rcomplete = 0;
 
 int int_length;
 char int_tempBuffer[64];
@@ -59,6 +61,7 @@ double get_kd() {
 
 //get reference position to feed to equation T = Kp(Pr-Pm)-Kd*Vm
 long interpolate(long curr_pos) {
+    rcomplete = 0;
     //calculate the reference position Pr to feed into PID equation
     //long start_pos = start_position();
     long distance_travelled = curr_pos; // - start_pos;
@@ -67,11 +70,27 @@ long interpolate(long curr_pos) {
     long distance_remaining = destination - distance_travelled;
 
     //update ref_position if we are outside of step_size window
-    if (distance_remaining >= step_size) {
-        ref_position = distance_travelled + step_size;
+    if (destination > 0) {
+        if (distance_remaining >= step_size) {
+            ref_position = distance_travelled + step_size;
+        }
+        else {
+            ref_position = destination;
+            if (distance_remaining == 0) {
+                rcomplete = 1;
+            } 
+        }
     }
     else {
-        ref_position = destination; 
+        if (-distance_remaining >= step_size) {
+            ref_position = distance_travelled - step_size;
+        }
+        else {
+            ref_position = destination;
+            if (distance_remaining == 0) {
+                rcomplete = 1;
+            } 
+        }
     }
 
     //int_length = sprintf( int_tempBuffer, "Des:%li Curr:%li Dest:%li Ref: %li\r\n",d,curr_pos, destination, ref_position);

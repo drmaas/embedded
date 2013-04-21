@@ -26,6 +26,7 @@ char menu_tempBuffer[64];
 
 extern int LOGGING;
 extern int motor_mode;
+extern int rcomplete;
 
 // A generic function for whenever you want to print to your serial comm window.
 // Provide a string and the length of that string. My serial comm likes "\r\n" at 
@@ -70,16 +71,25 @@ void process_received_string(const char* buffer)
 	print_usb( menu_tempBuffer, length );
 	
 	// Check valid command and implement
-        long kd,kp,pu,pr,pm,vm,t;
         int mode = 0;
+        int i;
 	switch (op_char) {
+                //perform series
+                case 'Q':
+                case 'q':
+                        mode = 1;
+                        set_mode(mode); //ref mode
+                        
+                        run_motor_command(360);
+                        run_motor_command(-360);
+                        run_motor_command(5);
+
+                        break;
                 // set desired speed for testing (this is T)
                 case 'S':
                 case 's':
                         mode = 0; 
                         set_mode(mode); //constant mode
-                        int i;
-                        //for (i = 0; i < 1000; i++) WAIT_1MS;
                         set_motor2_speed(value);
                         break;
 		// set desired positon (degrees from current)
@@ -98,15 +108,7 @@ void process_received_string(const char* buffer)
 		// print values of Kd, Kp, Vm, Pr, Pm, and T 
 		case 'V':
 		case 'v':
-                        kd = (long)get_kd();
-                        kp = (long)get_kp();
-                        pu = desired_position();
-                        pr = get_ref_position();
-                        pm = current_position();
-                        vm = get_velocity();
-                        t = get_motor2_speed();
-			length = sprintf( menu_tempBuffer, "Current parameters: kp=%li kd=%li vm=%li pu=%li pr=%li pm=%li t=%li mode=%d\r\n", kp,kd,vm,pu,pr,pm,t,motor_mode );
-			print_usb( menu_tempBuffer, length ); 
+                        log();
 			break;
                 //increase kp
                 case 'P':
@@ -131,6 +133,41 @@ void process_received_string(const char* buffer)
 	print_usb( MENU, MENU_LENGTH);
 
 } //end process_received_string()
+
+void log() {
+    long kd,kp,pu,pr,pm,vm,t;
+    kd = (long)get_kd();
+    kp = (long)get_kp();
+    pu = desired_position();
+    pr = get_ref_position();
+    pm = current_position();
+    vm = get_velocity();
+    t = get_motor2_speed();
+    length = sprintf( menu_tempBuffer, "Current parameters: kp=%li kd=%li vm=%li pu=%li pr=%li pm=%li t=%li mode=%d\r\n", kp,kd,vm,pu,pr,pm,t,motor_mode );
+    print_usb( menu_tempBuffer, length );
+}
+
+void log2() {
+    long pr,pm,t;
+    pr = get_ref_position();
+    pm = current_position();
+    t = get_motor2_speed();
+    length = sprintf( menu_tempBuffer, "%li,%li,%li\r\n", pr,pm,t );
+    print_usb( menu_tempBuffer, length );
+}
+
+void run_motor_command(long ref) {
+    length = sprintf( menu_tempBuffer, "***Running motor command:%li\r\n", ref );
+    print_usb( menu_tempBuffer, length );
+    int i;
+    reset_counts();
+    rcomplete = 0;
+    set_desired_position(ref);
+    while (!rcomplete)  {
+        log2();
+    }
+    for (i=0;i<500;i++) WAIT_1MS;
+}
 
 //---------------------------------------------------------------------------------------
 // If there are received bytes to process, this function loops through the receive_buffer

@@ -11,10 +11,10 @@ extern uint32_t f_IO;
 extern uint32_t PID_ticks;
 extern uint32_t INT_ticks;
 extern int G_velocity_period;
+extern int motor_mode;
 
 volatile long curr_velocity = 0;
 volatile long ref_pos = 0;
-volatile int motor_mode = 0;
 
 int timer_length;
 char timer_tempBuffer[64];

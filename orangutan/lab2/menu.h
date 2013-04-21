@@ -37,6 +37,10 @@ void wait_for_sending_to_finish();
 // The menu command is buffered in check_for_new_bytes_received (which calls this function).
 void process_received_string(const char*);
 
+void log();
+void log2();
+
+void run_motor_command(long ref);
 
 // If there are received bytes to process, this function loops through the receive_buffer
 // accumulating new bytes (keystrokes) in another buffer for processing.
