@@ -80,9 +80,9 @@ void process_received_string(const char* buffer)
                         mode = 1;
                         set_mode(mode); //ref mode
                         
-                        run_motor_command(360);
-                        run_motor_command(-360);
-                        run_motor_command(5);
+                        run_motor_command(360, 2);
+                        run_motor_command(-360, 2);
+                        run_motor_command(5, 2);
 
                         break;
                 // set desired speed for testing (this is T)
@@ -97,8 +97,8 @@ void process_received_string(const char* buffer)
 		case 'r':
                         mode = 1;
                         set_mode(mode); //ref mode
-                        reset_counts(); //reset encoder count
-                        set_desired_position(value);
+                        run_motor_command(value, 1);
+
 			break; 
                 // start logging pr, pm, T
                 case 'L':
@@ -156,15 +156,22 @@ void log2() {
     print_usb( menu_tempBuffer, length );
 }
 
-void run_motor_command(long ref) {
+void run_motor_command(long ref, int log_mode) {
     length = sprintf( menu_tempBuffer, "***Running motor command:%li\r\n", ref );
     print_usb( menu_tempBuffer, length );
     int i;
     reset_counts();
     rcomplete = 0;
     set_desired_position(ref);
-    while (!rcomplete)  {
-        log2();
+    if (LOGGING) {
+        while (!rcomplete)  {
+            if (log_mode > 1) {
+                log2();
+            }
+            else {
+                log();
+            }
+        }
     }
     for (i=0;i<500;i++) WAIT_1MS;
 }

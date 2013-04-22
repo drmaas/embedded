@@ -46,10 +46,6 @@ int main(void) {
 	while (1) {
                 MAIN_ticks++;
 
-                //log
-                if (LOGGING) {
-                    log();
-                }
                 serial_check();
                 check_for_new_bytes_received();
 	} //end while loop

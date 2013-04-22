@@ -40,7 +40,7 @@ void process_received_string(const char*);
 void log();
 void log2();
 
-void run_motor_command(long ref);
+void run_motor_command(long ref, int log_mode);
 
 // If there are received bytes to process, this function loops through the receive_buffer
 // accumulating new bytes (keystrokes) in another buffer for processing.

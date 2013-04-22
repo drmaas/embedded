@@ -155,7 +155,6 @@ ISR(TIMER3_COMPA_vect) {
         //}
 
         //set torque
-        rcomplete = 0;
         long torque = calculate_torque(get_kp(), get_kd(), ref_pos, position, curr_velocity);
         set_motor2_speed(torque);
         if (torque == 0) {
