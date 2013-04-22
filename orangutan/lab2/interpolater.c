@@ -14,8 +14,6 @@ volatile long step_size = 16; // 90 degrees in ticks
 
 volatile long ref_position;
 
-volatile int rcomplete = 0;
-
 int int_length;
 char int_tempBuffer[64];
 
@@ -61,7 +59,7 @@ double get_kd() {
 
 //get reference position to feed to equation T = Kp(Pr-Pm)-Kd*Vm
 long interpolate(long curr_pos) {
-    rcomplete = 0;
+    //rcomplete = 0;
     //calculate the reference position Pr to feed into PID equation
     //long start_pos = start_position();
     long distance_travelled = curr_pos; // - start_pos;
@@ -77,7 +75,7 @@ long interpolate(long curr_pos) {
         else {
             ref_position = destination;
             if (distance_remaining == 0) {
-                rcomplete = 1;
+                //rcomplete = 1;
             } 
         }
     }
@@ -88,7 +86,7 @@ long interpolate(long curr_pos) {
         else {
             ref_position = destination;
             if (distance_remaining == 0) {
-                rcomplete = 1;
+                //rcomplete = 1;
             } 
         }
     }
